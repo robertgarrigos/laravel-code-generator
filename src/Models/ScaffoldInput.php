@@ -1,8 +1,8 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Models;
+namespace robertgarrigos\CodeGenerator\Models;
 
-use CrestApps\CodeGenerator\Models\Bases\ScaffoldInputBase;
+use robertgarrigos\CodeGenerator\Models\Bases\ScaffoldInputBase;
 
 class ScaffoldInput extends ScaffoldInputBase
 {
@@ -23,7 +23,7 @@ class ScaffoldInput extends ScaffoldInputBase
     /**
      * Creates a new class instance.
      *
-     * @param CrestApps\CodeGenerator\Models\Bases\ScaffoldInputBase $model
+     * @param robertgarrigos\CodeGenerator\Models\Bases\ScaffoldInputBase $model
      *
      * @return void
      */

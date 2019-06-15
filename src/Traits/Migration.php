@@ -1,9 +1,9 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Traits;
+namespace robertgarrigos\CodeGenerator\Traits;
 
 use App;
-use CrestApps\CodeGenerator\Support\Str;
+use robertgarrigos\CodeGenerator\Support\Str;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 

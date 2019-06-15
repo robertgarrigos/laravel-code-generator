@@ -1,9 +1,9 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands\Migrations;
+namespace robertgarrigos\CodeGenerator\Commands\Migrations;
 
-use CrestApps\CodeGenerator\Commands\Bases\MigrationCommandBase;
-use CrestApps\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Commands\Bases\MigrationCommandBase;
+use robertgarrigos\CodeGenerator\Support\Helpers;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Database\Migrations\Migrator;
 

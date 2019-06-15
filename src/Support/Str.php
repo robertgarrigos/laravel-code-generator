@@ -1,8 +1,8 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Support;
+namespace robertgarrigos\CodeGenerator\Support;
 
-use CrestApps\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\Config;
 use Illuminate\Support\Str as LaravelStr;
 
 class Str extends LaravelStr
@@ -126,7 +126,7 @@ class Str extends LaravelStr
 
         return $subject;
     }
-	
+
     /**
      * Check a string for a positive keyword
      *
@@ -141,7 +141,7 @@ class Str extends LaravelStr
         }
         return in_array(strtolower($str), ['true', 'yes', '1', 'valid', 'correct']);
     }
-	
+
     /**
      * Checks if a string matches at least one given pattern
      *

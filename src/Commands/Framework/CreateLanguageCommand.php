@@ -1,15 +1,15 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands\Framework;
+namespace robertgarrigos\CodeGenerator\Commands\Framework;
 
-use CrestApps\CodeGenerator\Models\Label;
-use CrestApps\CodeGenerator\Models\Resource;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\CrestAppsTranslator;
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Support\ViewLabelsGenerator;
-use CrestApps\CodeGenerator\Traits\CommonCommand;
-use CrestApps\CodeGenerator\Traits\LanguageTrait;
+use robertgarrigos\CodeGenerator\Models\Label;
+use robertgarrigos\CodeGenerator\Models\Resource;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\CrestAppsTranslator;
+use robertgarrigos\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Support\ViewLabelsGenerator;
+use robertgarrigos\CodeGenerator\Traits\CommonCommand;
+use robertgarrigos\CodeGenerator\Traits\LanguageTrait;
 use Exception;
 use Illuminate\Console\Command;
 
@@ -68,7 +68,7 @@ class CreateLanguageCommand extends Command
     /**
      * Gets the destenation file.
      *
-     * @param CrestApps\CodeGenerator\Models\Resource $resource
+     * @param robertgarrigos\CodeGenerator\Models\Resource $resource
      * @param string $modelName
      *
      * @return array
@@ -142,7 +142,7 @@ class CreateLanguageCommand extends Command
     /**
      * Gets a singleton instance of a translator based ont he current framework's version.
      *
-     * @return CrestApps\CodeGenerator\Support\CrestAppsTranslator | Illuminate\Translation\Translator
+     * @return robertgarrigos\CodeGenerator\Support\CrestAppsTranslator | Illuminate\Translation\Translator
      */
     protected function getTranslator()
     {
@@ -289,7 +289,7 @@ class CreateLanguageCommand extends Command
     /**
      * Get file ready message.
      *
-     * @param CrestApps\CodeGenerator\Models\Label
+     * @param robertgarrigos\CodeGenerator\Models\Label
      *
      * @return string
      */

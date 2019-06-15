@@ -1,15 +1,15 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Support;
+namespace robertgarrigos\CodeGenerator\Support;
 
-use CrestApps\CodeGenerator\Models\Field;
-use CrestApps\CodeGenerator\Models\FieldMapper;
-use CrestApps\CodeGenerator\Support\Arr;
-use CrestApps\CodeGenerator\Support\FieldsOptimizer;
-use CrestApps\CodeGenerator\Support\Str;
-use CrestApps\CodeGenerator\Traits\CommonCommand;
-use CrestApps\CodeGenerator\Traits\GeneratorReplacers;
-use CrestApps\CodeGenerator\Traits\LabelTransformerTrait;
+use robertgarrigos\CodeGenerator\Models\Field;
+use robertgarrigos\CodeGenerator\Models\FieldMapper;
+use robertgarrigos\CodeGenerator\Support\Arr;
+use robertgarrigos\CodeGenerator\Support\FieldsOptimizer;
+use robertgarrigos\CodeGenerator\Support\Str;
+use robertgarrigos\CodeGenerator\Traits\CommonCommand;
+use robertgarrigos\CodeGenerator\Traits\GeneratorReplacers;
+use robertgarrigos\CodeGenerator\Traits\LabelTransformerTrait;
 use Exception;
 
 class FieldTransformer
@@ -103,13 +103,13 @@ class FieldTransformer
                         throw new Exception('Each provided property should use the following format "key:value"');
                     }
                     list($key, $value) = $properties;
-					
+
                     if(Str::startsWith($key, 'is-')){
                         $field[$key] = Str::stringToBool($value);
                     } else {
                         $field[$key] = $value;
                     }
-					
+
                     $field[$key] = $value;
                     if ($key == 'options') {
                         $options = Arr::fromString($value, '|');

@@ -1,10 +1,10 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Support;
+namespace robertgarrigos\CodeGenerator\Support;
 
 use App;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\Str;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\Str;
 use File;
 use Illuminate\Container\Container;
 
@@ -111,7 +111,7 @@ class Helpers
         $base = Container::getInstance()->getNamespace();
         foreach ($paths as $path) {
             if (!empty($path)) {
-                $base .= Str::postfix($path, '\\');
+                $base .= $path;
             }
         }
 

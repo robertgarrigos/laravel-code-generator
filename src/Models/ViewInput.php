@@ -1,9 +1,9 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Models;
+namespace robertgarrigos\CodeGenerator\Models;
 
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Traits\LanguageTrait;
+use robertgarrigos\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Traits\LanguageTrait;
 
 class ViewInput
 {

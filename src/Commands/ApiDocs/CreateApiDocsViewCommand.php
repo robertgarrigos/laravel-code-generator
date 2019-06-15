@@ -1,20 +1,20 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands\ApiDocs;
+namespace robertgarrigos\CodeGenerator\Commands\ApiDocs;
 
-use CrestApps\CodeGenerator\Models\Field;
-use CrestApps\CodeGenerator\Models\Label;
-use CrestApps\CodeGenerator\Models\Resource;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Support\Str;
-use CrestApps\CodeGenerator\Support\ViewLabelsGenerator;
-use CrestApps\CodeGenerator\Traits\ApiDocViewsTrait;
-use CrestApps\CodeGenerator\Traits\ApiResourceTrait;
-use CrestApps\CodeGenerator\Traits\CommonCommand;
-use CrestApps\CodeGenerator\Traits\GeneratorReplacers;
-use CrestApps\CodeGenerator\Traits\LanguageTrait;
-use CrestApps\CodeGenerator\Traits\RouteTrait;
+use robertgarrigos\CodeGenerator\Models\Field;
+use robertgarrigos\CodeGenerator\Models\Label;
+use robertgarrigos\CodeGenerator\Models\Resource;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Support\Str;
+use robertgarrigos\CodeGenerator\Support\ViewLabelsGenerator;
+use robertgarrigos\CodeGenerator\Traits\ApiDocViewsTrait;
+use robertgarrigos\CodeGenerator\Traits\ApiResourceTrait;
+use robertgarrigos\CodeGenerator\Traits\CommonCommand;
+use robertgarrigos\CodeGenerator\Traits\GeneratorReplacers;
+use robertgarrigos\CodeGenerator\Traits\LanguageTrait;
+use robertgarrigos\CodeGenerator\Traits\RouteTrait;
 use Illuminate\Console\Command;
 
 class CreateApiDocsViewCommand extends Command
@@ -360,7 +360,7 @@ class CreateApiDocsViewCommand extends Command
     /**
      * Build the model class with the given name.
      *
-     * @param CrestApps\CodeGenerator\Models\Resource $resource
+     * @param robertgarrigos\CodeGenerator\Models\Resource $resource
      * @param string $destenationFile
      *
      * @return bool
@@ -409,7 +409,7 @@ class CreateApiDocsViewCommand extends Command
     /**
      * Get a view ready label accessor.
      *
-     * @param  CrestApps\CodeGenerator\Model\Label $label
+     * @param  robertgarrigos\CodeGenerator\Model\Label $label
      *
      * @return string
      */

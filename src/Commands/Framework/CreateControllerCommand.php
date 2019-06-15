@@ -1,11 +1,11 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands\Framework;
+namespace robertgarrigos\CodeGenerator\Commands\Framework;
 
-use CrestApps\CodeGenerator\Commands\Bases\ControllerCommandBase;
-use CrestApps\CodeGenerator\Models\Resource;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Commands\Bases\ControllerCommandBase;
+use robertgarrigos\CodeGenerator\Models\Resource;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\Helpers;
 
 class CreateControllerCommand extends ControllerCommandBase
 {

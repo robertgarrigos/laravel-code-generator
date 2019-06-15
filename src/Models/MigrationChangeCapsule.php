@@ -1,9 +1,9 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Models;
+namespace robertgarrigos\CodeGenerator\Models;
 
-use CrestApps\CodeGenerator\Support\Contracts\ChangeDetector;
-use CrestApps\CodeGenerator\Support\Contracts\JsonWriter;
+use robertgarrigos\CodeGenerator\Support\Contracts\ChangeDetector;
+use robertgarrigos\CodeGenerator\Support\Contracts\JsonWriter;
 
 class MigrationChangeCapsule implements JsonWriter, ChangeDetector
 {

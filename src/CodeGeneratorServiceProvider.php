@@ -1,8 +1,8 @@
 <?php
 
-namespace CrestApps\CodeGenerator;
+namespace robertgarrigos\CodeGenerator;
 
-use CrestApps\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Support\Helpers;
 use File;
 use Illuminate\Support\ServiceProvider;
 
@@ -42,50 +42,50 @@ class CodeGeneratorServiceProvider extends ServiceProvider
     {
         $commands =
             [
-            'CrestApps\CodeGenerator\Commands\Framework\CreateControllerCommand',
-            'CrestApps\CodeGenerator\Commands\Framework\CreateModelCommand',
-            'CrestApps\CodeGenerator\Commands\Framework\CreateLanguageCommand',
-            'CrestApps\CodeGenerator\Commands\Framework\CreateFormRequestCommand',
-            'CrestApps\CodeGenerator\Commands\Framework\CreateRoutesCommand',
-            'CrestApps\CodeGenerator\Commands\Framework\CreateMigrationCommand',
-            'CrestApps\CodeGenerator\Commands\Framework\CreateScaffoldCommand',
-            'CrestApps\CodeGenerator\Commands\Framework\CreateResourcesCommand',
-            'CrestApps\CodeGenerator\Commands\Framework\CreateMappedResourcesCommand',
-            'CrestApps\CodeGenerator\Commands\Resources\ResourceFileFromDatabaseCommand',
-            'CrestApps\CodeGenerator\Commands\Resources\ResourceFileCreateCommand',
-            'CrestApps\CodeGenerator\Commands\Resources\ResourceFileDeleteCommand',
-            'CrestApps\CodeGenerator\Commands\Resources\ResourceFileAppendCommand',
-            'CrestApps\CodeGenerator\Commands\Resources\ResourceFileReduceCommand',
-            'CrestApps\CodeGenerator\Commands\Views\CreateIndexViewCommand',
-            'CrestApps\CodeGenerator\Commands\Views\CreateCreateViewCommand',
-            'CrestApps\CodeGenerator\Commands\Views\CreateFormViewCommand',
-            'CrestApps\CodeGenerator\Commands\Views\CreateEditViewCommand',
-            'CrestApps\CodeGenerator\Commands\Views\CreateShowViewCommand',
-            'CrestApps\CodeGenerator\Commands\Views\CreateViewsCommand',
-            'CrestApps\CodeGenerator\Commands\Views\CreateViewLayoutCommand',
-            'CrestApps\CodeGenerator\Commands\Views\CreateLayoutCommand',
-            'CrestApps\CodeGenerator\Commands\Api\CreateApiControllerCommand',
-            'CrestApps\CodeGenerator\Commands\Api\CreateApiScaffoldCommand',
-            'CrestApps\CodeGenerator\Commands\ApiDocs\CreateApiDocsControllerCommand',
-            'CrestApps\CodeGenerator\Commands\ApiDocs\CreateApiDocsScaffoldCommand',
-            'CrestApps\CodeGenerator\Commands\ApiDocs\CreateApiDocsViewCommand',
+            'robertgarrigos\CodeGenerator\Commands\Framework\CreateControllerCommand',
+            'robertgarrigos\CodeGenerator\Commands\Framework\CreateModelCommand',
+            'robertgarrigos\CodeGenerator\Commands\Framework\CreateLanguageCommand',
+            'robertgarrigos\CodeGenerator\Commands\Framework\CreateFormRequestCommand',
+            'robertgarrigos\CodeGenerator\Commands\Framework\CreateRoutesCommand',
+            'robertgarrigos\CodeGenerator\Commands\Framework\CreateMigrationCommand',
+            'robertgarrigos\CodeGenerator\Commands\Framework\CreateScaffoldCommand',
+            'robertgarrigos\CodeGenerator\Commands\Framework\CreateResourcesCommand',
+            'robertgarrigos\CodeGenerator\Commands\Framework\CreateMappedResourcesCommand',
+            'robertgarrigos\CodeGenerator\Commands\Resources\ResourceFileFromDatabaseCommand',
+            'robertgarrigos\CodeGenerator\Commands\Resources\ResourceFileCreateCommand',
+            'robertgarrigos\CodeGenerator\Commands\Resources\ResourceFileDeleteCommand',
+            'robertgarrigos\CodeGenerator\Commands\Resources\ResourceFileAppendCommand',
+            'robertgarrigos\CodeGenerator\Commands\Resources\ResourceFileReduceCommand',
+            'robertgarrigos\CodeGenerator\Commands\Views\CreateIndexViewCommand',
+            'robertgarrigos\CodeGenerator\Commands\Views\CreateCreateViewCommand',
+            'robertgarrigos\CodeGenerator\Commands\Views\CreateFormViewCommand',
+            'robertgarrigos\CodeGenerator\Commands\Views\CreateEditViewCommand',
+            'robertgarrigos\CodeGenerator\Commands\Views\CreateShowViewCommand',
+            'robertgarrigos\CodeGenerator\Commands\Views\CreateViewsCommand',
+            'robertgarrigos\CodeGenerator\Commands\Views\CreateViewLayoutCommand',
+            'robertgarrigos\CodeGenerator\Commands\Views\CreateLayoutCommand',
+            'robertgarrigos\CodeGenerator\Commands\Api\CreateApiControllerCommand',
+            'robertgarrigos\CodeGenerator\Commands\Api\CreateApiScaffoldCommand',
+            'robertgarrigos\CodeGenerator\Commands\ApiDocs\CreateApiDocsControllerCommand',
+            'robertgarrigos\CodeGenerator\Commands\ApiDocs\CreateApiDocsScaffoldCommand',
+            'robertgarrigos\CodeGenerator\Commands\ApiDocs\CreateApiDocsViewCommand',
         ];
 
         if (Helpers::isNewerThanOrEqualTo()) {
             $commands = array_merge($commands,
                 [
-                    'CrestApps\CodeGenerator\Commands\Migrations\MigrateAllCommand',
-                    'CrestApps\CodeGenerator\Commands\Migrations\RefreshAllCommand',
-                    'CrestApps\CodeGenerator\Commands\Migrations\ResetAllCommand',
-                    'CrestApps\CodeGenerator\Commands\Migrations\RollbackAllCommand',
-                    'CrestApps\CodeGenerator\Commands\Migrations\StatusAllCommand',
+                    'robertgarrigos\CodeGenerator\Commands\Migrations\MigrateAllCommand',
+                    'robertgarrigos\CodeGenerator\Commands\Migrations\RefreshAllCommand',
+                    'robertgarrigos\CodeGenerator\Commands\Migrations\ResetAllCommand',
+                    'robertgarrigos\CodeGenerator\Commands\Migrations\RollbackAllCommand',
+                    'robertgarrigos\CodeGenerator\Commands\Migrations\StatusAllCommand',
                 ]);
         }
 
         if (Helpers::isApiResourceSupported()) {
             $commands = array_merge($commands,
                 [
-                    'CrestApps\CodeGenerator\Commands\Api\CreateApiResourceCommand',
+                    'robertgarrigos\CodeGenerator\Commands\Api\CreateApiResourceCommand',
                 ]);
         }
 

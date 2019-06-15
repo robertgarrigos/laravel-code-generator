@@ -1,11 +1,11 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands\Resources;
+namespace robertgarrigos\CodeGenerator\Commands\Resources;
 
-use CrestApps\CodeGenerator\Commands\Bases\ResourceFileCommandBase;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Support\ResourceMapper;
+use robertgarrigos\CodeGenerator\Commands\Bases\ResourceFileCommandBase;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Support\ResourceMapper;
 
 class ResourceFileDeleteCommand extends ResourceFileCommandBase
 {

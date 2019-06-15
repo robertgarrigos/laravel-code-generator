@@ -1,14 +1,14 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands\Api;
+namespace robertgarrigos\CodeGenerator\Commands\Api;
 
-use CrestApps\CodeGenerator\Commands\Bases\ControllerCommandBase;
-use CrestApps\CodeGenerator\Models\Resource;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Support\Str;
-use CrestApps\CodeGenerator\Support\ViewLabelsGenerator;
-use CrestApps\CodeGenerator\Traits\ApiResourceTrait;
+use robertgarrigos\CodeGenerator\Commands\Bases\ControllerCommandBase;
+use robertgarrigos\CodeGenerator\Models\Resource;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Support\Str;
+use robertgarrigos\CodeGenerator\Support\ViewLabelsGenerator;
+use robertgarrigos\CodeGenerator\Traits\ApiResourceTrait;
 
 class CreateApiControllerCommand extends ControllerCommandBase
 {
@@ -411,7 +411,7 @@ class CreateApiControllerCommand extends ControllerCommandBase
     /**
      * Executes the command that generates a migration.
      *
-     * @param CrestApps\CodeGenerator\Models\ScaffoldInput $input
+     * @param robertgarrigos\CodeGenerator\Models\ScaffoldInput $input
      *
      * @return $this
      */

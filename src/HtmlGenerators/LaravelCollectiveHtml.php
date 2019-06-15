@@ -1,11 +1,11 @@
 <?php
-namespace CrestApps\CodeGenerator\HtmlGenerators;
+namespace robertgarrigos\CodeGenerator\HtmlGenerators;
 
-use CrestApps\CodeGenerator\HtmlGenerators\HtmlGeneratorBase;
-use CrestApps\CodeGenerator\Models\Field;
-use CrestApps\CodeGenerator\Models\Label;
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Support\ViewLabelsGenerator;
+use robertgarrigos\CodeGenerator\HtmlGenerators\HtmlGeneratorBase;
+use robertgarrigos\CodeGenerator\Models\Field;
+use robertgarrigos\CodeGenerator\Models\Label;
+use robertgarrigos\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Support\ViewLabelsGenerator;
 
 class LaravelCollectiveHtml extends HtmlGeneratorBase
 {
@@ -72,7 +72,7 @@ class LaravelCollectiveHtml extends HtmlGeneratorBase
     /**
      * Get the placeholder attribute.
      *
-     * @param CrestApps\CodeGenerator\Models\Label $placeholder
+     * @param robertgarrigos\CodeGenerator\Models\Label $placeholder
      *
      * @return string
      */
@@ -84,7 +84,7 @@ class LaravelCollectiveHtml extends HtmlGeneratorBase
     /**
      * Get the placeholder attribute for a menu.
      *
-     * @param CrestApps\CodeGenerator\Models\Label $placeholder
+     * @param robertgarrigos\CodeGenerator\Models\Label $placeholder
      * @param string $name
      *
      * @return string
@@ -109,7 +109,7 @@ class LaravelCollectiveHtml extends HtmlGeneratorBase
     /**
      * It gets converts an array to a string based array for the views.
      *
-     * @param CrestApps\CodeGenerator\Models\Field $field
+     * @param robertgarrigos\CodeGenerator\Models\Field $field
      *
      * @return string
      */
@@ -125,7 +125,7 @@ class LaravelCollectiveHtml extends HtmlGeneratorBase
     /**
      * Gets a plain title from a given label.
      *
-     * @param CrestApps\CodeGenerator\Models\Label $label
+     * @param robertgarrigos\CodeGenerator\Models\Label $label
      * @param bool $raw
      *
      * @return string
@@ -291,7 +291,7 @@ class LaravelCollectiveHtml extends HtmlGeneratorBase
     /**
      * Gets an instance of ViewLabelsGenerator
      *
-     * @return CrestApps\CodeGenerator\Support\ViewLabelsGenerator
+     * @return robertgarrigos\CodeGenerator\Support\ViewLabelsGenerator
      */
     protected function getViewLabelsGenerator()
     {

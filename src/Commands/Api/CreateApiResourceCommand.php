@@ -1,15 +1,15 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands\Api;
+namespace robertgarrigos\CodeGenerator\Commands\Api;
 
-use CrestApps\CodeGenerator\Models\Resource;
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Support\Str;
-use CrestApps\CodeGenerator\Support\ViewLabelsGenerator;
-use CrestApps\CodeGenerator\Traits\ApiResourceTrait;
-use CrestApps\CodeGenerator\Traits\CommonCommand;
-use CrestApps\CodeGenerator\Traits\GeneratorReplacers;
-use CrestApps\CodeGenerator\Traits\ModelTrait;
+use robertgarrigos\CodeGenerator\Models\Resource;
+use robertgarrigos\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Support\Str;
+use robertgarrigos\CodeGenerator\Support\ViewLabelsGenerator;
+use robertgarrigos\CodeGenerator\Traits\ApiResourceTrait;
+use robertgarrigos\CodeGenerator\Traits\CommonCommand;
+use robertgarrigos\CodeGenerator\Traits\GeneratorReplacers;
+use robertgarrigos\CodeGenerator\Traits\ModelTrait;
 use Illuminate\Console\Command;
 
 class CreateApiResourceCommand extends Command
@@ -57,7 +57,7 @@ class CreateApiResourceCommand extends Command
     {
         $input = $this->getCommandInput();
 
-        $resource = Resource::fromFile($input->resourceFile, 'CrestApps');
+        $resource = Resource::fromFile($input->resourceFile, 'robertgarrigos');
         $apiResourceFileName = $this->getApiFileName($input->modelName, $input->isCollection);
 
         $destenationFile = $this->getDestenationFile($apiResourceFileName, $input->isCollection);
@@ -117,7 +117,7 @@ class CreateApiResourceCommand extends Command
     /**
      * Checks for basic errors
      *
-     * @param  CrestApps\CodeGenerator\Models\Resource $resource
+     * @param  robertgarrigos\CodeGenerator\Models\Resource $resource
      * @param string $destenationFile
      * @param bool $isCollection
      *

@@ -1,10 +1,10 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands\Bases;
+namespace robertgarrigos\CodeGenerator\Commands\Bases;
 
-use CrestApps\CodeGenerator\Commands\Bases\ResourceFileCommandBase;
-use CrestApps\CodeGenerator\Support\Arr;
-use CrestApps\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Commands\Bases\ResourceFileCommandBase;
+use robertgarrigos\CodeGenerator\Support\Arr;
+use robertgarrigos\CodeGenerator\Support\Helpers;
 
 class ResourceFileCreatorCommandBase extends ResourceFileCommandBase
 {

@@ -1,18 +1,18 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands\Framework;
+namespace robertgarrigos\CodeGenerator\Commands\Framework;
 
-use CrestApps\CodeGenerator\Models\Field;
-use CrestApps\CodeGenerator\Models\ForeignRelationship;
-use CrestApps\CodeGenerator\Models\Resource;
-use CrestApps\CodeGenerator\Support\Arr;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\FieldTransformer;
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Support\Str;
-use CrestApps\CodeGenerator\Traits\CommonCommand;
-use CrestApps\CodeGenerator\Traits\GeneratorReplacers;
-use CrestApps\CodeGenerator\Traits\LanguageTrait;
+use robertgarrigos\CodeGenerator\Models\Field;
+use robertgarrigos\CodeGenerator\Models\ForeignRelationship;
+use robertgarrigos\CodeGenerator\Models\Resource;
+use robertgarrigos\CodeGenerator\Support\Arr;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\FieldTransformer;
+use robertgarrigos\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Support\Str;
+use robertgarrigos\CodeGenerator\Traits\CommonCommand;
+use robertgarrigos\CodeGenerator\Traits\GeneratorReplacers;
+use robertgarrigos\CodeGenerator\Traits\LanguageTrait;
 use Illuminate\Console\Command;
 
 class CreateModelCommand extends Command
@@ -106,7 +106,7 @@ class CreateModelCommand extends Command
     /**
      * Checks for basic errors
      *
-     * @param  CrestApps\CodeGenerator\Models\Resource $resource
+     * @param  robertgarrigos\CodeGenerator\Models\Resource $resource
      * @param string $destenationFile
      *
      * @return bool
@@ -549,7 +549,7 @@ class CreateModelCommand extends Command
     /**
      * Gets accessor for a given field.
      *
-     * @param  CrestApps\CodeGenerator\Models\Field  $field
+     * @param  robertgarrigos\CodeGenerator\Models\Field  $field
      * @param  string $content
      * @return string
      */
@@ -566,7 +566,7 @@ class CreateModelCommand extends Command
     /**
      * Gets mutator for a given field.
      *
-     * @param  CrestApps\CodeGenerator\Models\Field  $field
+     * @param  robertgarrigos\CodeGenerator\Models\Field  $field
      * @param  string $content
      *
      * @return string
@@ -584,7 +584,7 @@ class CreateModelCommand extends Command
     /**
      * Creates the code for a relationship.
      *
-     * @param CrestApps\CodeGenerator\Models\ForeignRelation $relation
+     * @param robertgarrigos\CodeGenerator\Models\ForeignRelation $relation
      *
      * @return string
      */
@@ -603,7 +603,7 @@ class CreateModelCommand extends Command
     /**
      * Gets the return type for the given relationship
      *
-     * @param CrestApps\CodeGenerator\Models\ForeignRelation $relation
+     * @param robertgarrigos\CodeGenerator\Models\ForeignRelation $relation
      *
      * @return string
      */

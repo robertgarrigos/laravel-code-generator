@@ -1,18 +1,18 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Models;
+namespace robertgarrigos\CodeGenerator\Models;
 
 use App;
-use CrestApps\CodeGenerator\Models\ForeignRelationhip;
-use CrestApps\CodeGenerator\Models\Label;
-use CrestApps\CodeGenerator\Support\Arr;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\Contracts\JsonWriter;
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Support\Str;
-use CrestApps\CodeGenerator\Traits\CommonCommand;
-use CrestApps\CodeGenerator\Traits\GeneratorReplacers;
-use CrestApps\CodeGenerator\Traits\ModelTrait;
+use robertgarrigos\CodeGenerator\Models\ForeignRelationhip;
+use robertgarrigos\CodeGenerator\Models\Label;
+use robertgarrigos\CodeGenerator\Support\Arr;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\Contracts\JsonWriter;
+use robertgarrigos\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Support\Str;
+use robertgarrigos\CodeGenerator\Traits\CommonCommand;
+use robertgarrigos\CodeGenerator\Traits\GeneratorReplacers;
+use robertgarrigos\CodeGenerator\Traits\ModelTrait;
 use Exception;
 
 class Field implements JsonWriter
@@ -321,14 +321,14 @@ class Field implements JsonWriter
     /**
      * The foreign relations
      *
-     * @var CrestApps\CodeGenerator\Models\ForeignRelationhip
+     * @var robertgarrigos\CodeGenerator\Models\ForeignRelationhip
      */
     private $foreignRelation;
 
     /**
      * The foreign Constraint.
      *
-     * @var CrestApps\CodeGenerator\Models\ForeignConstraint
+     * @var robertgarrigos\CodeGenerator\Models\ForeignConstraint
      */
     private $foreignConstraint;
 
@@ -441,7 +441,7 @@ class Field implements JsonWriter
      *
      * @param string $lang
      *
-     * @return CrestApps\CodeGenerator\Models\Label
+     * @return robertgarrigos\CodeGenerator\Models\Label
      */
     public function getLabel($lang = null)
     {
@@ -459,7 +459,7 @@ class Field implements JsonWriter
      *
      * @param string $lang
      *
-     * @return CrestApps\CodeGenerator\Models\Label
+     * @return robertgarrigos\CodeGenerator\Models\Label
      */
     public function getPlaceholder($lang = null)
     {
@@ -485,7 +485,7 @@ class Field implements JsonWriter
     /**
      * Gets the first available label if any.
      *
-     * @return CrestApps\CodeGenerator\Models\Label
+     * @return robertgarrigos\CodeGenerator\Models\Label
      */
     public function getFirstLabel()
     {
@@ -495,7 +495,7 @@ class Field implements JsonWriter
     /**
      * Gets the first available placeholder if any.
      *
-     * @return CrestApps\CodeGenerator\Models\Label | null
+     * @return robertgarrigos\CodeGenerator\Models\Label | null
      */
     public function getFirstPlaceholder()
     {
@@ -583,7 +583,7 @@ class Field implements JsonWriter
     /**
      * Sets the foreign relationship of the field.
      *
-     * @param CrestApps\CodeGenerator\Models\ForeignRelationship $relation
+     * @param robertgarrigos\CodeGenerator\Models\ForeignRelationship $relation
      *
      * @return void
      */
@@ -632,7 +632,7 @@ class Field implements JsonWriter
     /**
      * Sets the foreign key of the field.
      *
-     * @param CrestApps\CodeGenerator\Models\ForeignConstraint $foreignConstraint
+     * @param robertgarrigos\CodeGenerator\Models\ForeignConstraint $foreignConstraint
      *
      * @return void
      */
@@ -644,7 +644,7 @@ class Field implements JsonWriter
     /**
      * It set the placeholder property for a given field
      *
-     * @param CrestApps\CodeGenerator\Models\Field $field
+     * @param robertgarrigos\CodeGenerator\Models\Field $field
      * @param array $properties
      *
      * @return $this
@@ -715,7 +715,7 @@ class Field implements JsonWriter
     /**
      * Gets the field's foreign relationship.
      *
-     * @return CrestApps\CodeGenerator\Models\ForeignRelationhip
+     * @return robertgarrigos\CodeGenerator\Models\ForeignRelationhip
      */
     public function getForeignRelation()
     {
@@ -725,7 +725,7 @@ class Field implements JsonWriter
     /**
      * Gets the field's foreign key.
      *
-     * @return CrestApps\CodeGenerator\Models\ForeignConstraint
+     * @return robertgarrigos\CodeGenerator\Models\ForeignConstraint
      */
     public function getForeignConstraint()
     {
@@ -1407,7 +1407,7 @@ class Field implements JsonWriter
      *
      * @param array $properties
      *
-     * @return null || CrestApps\CodeGenerator\Models\ForeignConstraint
+     * @return null || robertgarrigos\CodeGenerator\Models\ForeignConstraint
      */
     protected function getForeignConstraintFromArray(array $properties)
     {

@@ -1,10 +1,10 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Traits;
+namespace robertgarrigos\CodeGenerator\Traits;
 
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Support\Str;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Support\Str;
 
 trait ModelTrait
 {

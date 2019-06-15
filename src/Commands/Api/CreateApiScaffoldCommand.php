@@ -1,15 +1,15 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands\Api;
+namespace robertgarrigos\CodeGenerator\Commands\Api;
 
-use CrestApps\CodeGenerator\Commands\Bases\CreateScaffoldCommandBase;
-use CrestApps\CodeGenerator\Models\ApiScaffoldInput;
-use CrestApps\CodeGenerator\Models\Field;
-use CrestApps\CodeGenerator\Models\Resource;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Support\Str;
-use CrestApps\CodeGenerator\Traits\ScaffoldTrait;
+use robertgarrigos\CodeGenerator\Commands\Bases\CreateScaffoldCommandBase;
+use robertgarrigos\CodeGenerator\Models\ApiScaffoldInput;
+use robertgarrigos\CodeGenerator\Models\Field;
+use robertgarrigos\CodeGenerator\Models\Resource;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Support\Str;
+use robertgarrigos\CodeGenerator\Traits\ScaffoldTrait;
 
 class CreateApiScaffoldCommand extends CreateScaffoldCommandBase
 {
@@ -77,7 +77,7 @@ class CreateApiScaffoldCommand extends CreateScaffoldCommandBase
 
         $this->beforeScaffold($input);
 
-        $resource = Resource::fromFile($input->resourceFile, $input->languageFileName ?: 'CrestApps');
+        $resource = Resource::fromFile($input->resourceFile, $input->languageFileName ?: 'robertgarrigos');
 
         $this->validateField($resource->fields)
             ->printInfo('Scaffolding api-based resources for ' . $this->modelNamePlainEnglish($input->modelName) . '...')
@@ -96,7 +96,7 @@ class CreateApiScaffoldCommand extends CreateScaffoldCommandBase
     /**
      * Executes the command that generates the controller.
      *
-     * @param CrestApps\CodeGenerator\Models\ApiScaffoldInput $input
+     * @param robertgarrigos\CodeGenerator\Models\ApiScaffoldInput $input
      * @return $this
      */
     protected function createController(ApiScaffoldInput $input)
@@ -136,7 +136,7 @@ class CreateApiScaffoldCommand extends CreateScaffoldCommandBase
     /**
      * Executes the command that generates the documentation
      *
-     * @param CrestApps\CodeGenerator\Models\ApiScaffoldInput $input
+     * @param robertgarrigos\CodeGenerator\Models\ApiScaffoldInput $input
      * @return $this
      */
     protected function createDocs(ApiScaffoldInput $input)
@@ -165,8 +165,8 @@ class CreateApiScaffoldCommand extends CreateScaffoldCommandBase
     /**
      * Executes the command that generates the routes.
      *
-     * @param CrestApps\CodeGenerator\Models\ApiScaffoldInput $input
-     * @param CrestApps\CodeGenerator\Models\Field $primaryField
+     * @param robertgarrigos\CodeGenerator\Models\ApiScaffoldInput $input
+     * @param robertgarrigos\CodeGenerator\Models\Field $primaryField
      * @param bool $forApi
      *
      * @return $this
@@ -216,7 +216,7 @@ class CreateApiScaffoldCommand extends CreateScaffoldCommandBase
     /**
      * Gets a clean user inputs.
      *
-     * @return CrestApps\CodeGenerator\Models\ApiScaffoldInput
+     * @return robertgarrigos\CodeGenerator\Models\ApiScaffoldInput
      */
     protected function getCommandInput()
     {

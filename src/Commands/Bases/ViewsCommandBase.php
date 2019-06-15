@@ -1,17 +1,17 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands\Bases;
+namespace robertgarrigos\CodeGenerator\Commands\Bases;
 
-use CrestApps\CodeGenerator\HtmlGenerators\LaravelCollectiveHtml;
-use CrestApps\CodeGenerator\HtmlGenerators\StandardHtml;
-use CrestApps\CodeGenerator\Models\Resource;
-use CrestApps\CodeGenerator\Models\ViewInput;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Support\Str;
-use CrestApps\CodeGenerator\Support\ViewLabelsGenerator;
-use CrestApps\CodeGenerator\Traits\CommonCommand;
-use CrestApps\CodeGenerator\Traits\GeneratorReplacers;
+use robertgarrigos\CodeGenerator\HtmlGenerators\LaravelCollectiveHtml;
+use robertgarrigos\CodeGenerator\HtmlGenerators\StandardHtml;
+use robertgarrigos\CodeGenerator\Models\Resource;
+use robertgarrigos\CodeGenerator\Models\ViewInput;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Support\Str;
+use robertgarrigos\CodeGenerator\Support\ViewLabelsGenerator;
+use robertgarrigos\CodeGenerator\Traits\CommonCommand;
+use robertgarrigos\CodeGenerator\Traits\GeneratorReplacers;
 use Illuminate\Console\Command;
 
 abstract class ViewsCommandBase extends Command
@@ -134,7 +134,7 @@ abstract class ViewsCommandBase extends Command
      * It Replaces the primaryKey, modelNames, routeNames in a given stub
      *
      * @param string $stub
-     * @param CrestApps\CodeGenerator\Models\ViewInput $input
+     * @param robertgarrigos\CodeGenerator\Models\ViewInput $input
      *
      * @return $this
      */
@@ -158,7 +158,7 @@ abstract class ViewsCommandBase extends Command
      *
      * @param string $file
      * @param bool $force
-     * @param CrestApps\CodeGenerator\Models\Resource
+     * @param robertgarrigos\CodeGenerator\Models\Resource
      *
      * @return bool
      */
@@ -401,7 +401,7 @@ abstract class ViewsCommandBase extends Command
      * @param string $modelName
      * @param string $template
      *
-     * @return CrestApps\CodeGenerator\HtmlGenerators\HtmlGeneratorBase
+     * @return robertgarrigos\CodeGenerator\HtmlGenerators\HtmlGeneratorBase
      */
     protected function getHtmlGenerator(array $fields, $modelName, $template)
     {

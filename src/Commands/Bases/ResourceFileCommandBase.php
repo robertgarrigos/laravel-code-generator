@@ -1,10 +1,10 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands\Bases;
+namespace robertgarrigos\CodeGenerator\Commands\Bases;
 
-use CrestApps\CodeGenerator\Models\Resource;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Traits\CommonCommand;
+use robertgarrigos\CodeGenerator\Models\Resource;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Traits\CommonCommand;
 use Illuminate\Console\Command;
 
 class ResourceFileCommandBase extends Command
@@ -17,11 +17,11 @@ class ResourceFileCommandBase extends Command
      * @param string $file
      * @param array $languages
      *
-     * @return CrestApps\CodeGenerator\Models\Resource
+     * @return robertgarrigos\CodeGenerator\Models\Resource
      */
     protected function getResources($file, array $languages = [])
     {
-        return Resource::fromJson($this->getFileContent($file), 'crestapps', $languages);
+        return Resource::fromJson($this->getFileContent($file), 'robertgarrigos', $languages);
     }
 
     /**

@@ -1,17 +1,17 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Models;
+namespace robertgarrigos\CodeGenerator\Models;
 
-use CrestApps\CodeGenerator\Models\ForeignRelationship;
-use CrestApps\CodeGenerator\Models\Index;
-use CrestApps\CodeGenerator\Models\Relation;
-use CrestApps\CodeGenerator\Support\Arr;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\Contracts\JsonWriter;
-use CrestApps\CodeGenerator\Support\FieldTransformer;
-use CrestApps\CodeGenerator\Traits\CommonCommand;
-use CrestApps\CodeGenerator\Traits\GeneratorReplacers;
-use CrestApps\CodeGenerator\Traits\LabelTransformerTrait;
+use robertgarrigos\CodeGenerator\Models\ForeignRelationship;
+use robertgarrigos\CodeGenerator\Models\Index;
+use robertgarrigos\CodeGenerator\Models\Relation;
+use robertgarrigos\CodeGenerator\Support\Arr;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\Contracts\JsonWriter;
+use robertgarrigos\CodeGenerator\Support\FieldTransformer;
+use robertgarrigos\CodeGenerator\Traits\CommonCommand;
+use robertgarrigos\CodeGenerator\Traits\GeneratorReplacers;
+use robertgarrigos\CodeGenerator\Traits\LabelTransformerTrait;
 use Exception;
 use File;
 
@@ -224,7 +224,7 @@ class Resource implements JsonWriter
     /**
      * Get the first header field if available
      *
-     * @return min (null | CrestApps\CodeGenerator\Models\Field)
+     * @return min (null | robertgarrigos\CodeGenerator\Models\Field)
      */
     public function getHeaderField()
     {
@@ -240,7 +240,7 @@ class Resource implements JsonWriter
     /**
      * Get the first primary field if available
      *
-     * @return mix (null | CrestApps\CodeGenerator\Models\Field)
+     * @return mix (null | robertgarrigos\CodeGenerator\Models\Field)
      */
     public function getPrimaryField()
     {
@@ -542,7 +542,7 @@ class Resource implements JsonWriter
      * @param string $localeGroup
      * @param array $languages
      *
-     * @return CrestApps\CodeGenerator\Models\Resource
+     * @return robertgarrigos\CodeGenerator\Models\Resource
      */
     public static function fromFile($filename, $localeGroup, array $languages = [])
     {
@@ -558,7 +558,7 @@ class Resource implements JsonWriter
      * @param string $localeGroup
      * @param array $languages
      *
-     * @return CrestApps\CodeGenerator\Models\Resource
+     * @return robertgarrigos\CodeGenerator\Models\Resource
      */
     public static function fromJson($json, $localeGroup, array $languages = [])
     {
@@ -584,7 +584,7 @@ class Resource implements JsonWriter
      * @param string $localeGroup
      * @param array $languages
      *
-     * @return CrestApps\CodeGenerator\Models\Resource
+     * @return robertgarrigos\CodeGenerator\Models\Resource
      */
     public static function fromArray(array $properties, $localeGroup, array $languages = [])
     {

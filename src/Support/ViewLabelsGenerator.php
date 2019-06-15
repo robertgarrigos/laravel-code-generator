@@ -1,13 +1,13 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Support;
+namespace robertgarrigos\CodeGenerator\Support;
 
 use App;
-use CrestApps\CodeGenerator\Models\Label;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Traits\CommonCommand;
-use CrestApps\CodeGenerator\Traits\GeneratorReplacers;
-use CrestApps\CodeGenerator\Traits\LanguageTrait;
+use robertgarrigos\CodeGenerator\Models\Label;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Traits\CommonCommand;
+use robertgarrigos\CodeGenerator\Traits\GeneratorReplacers;
+use robertgarrigos\CodeGenerator\Traits\LanguageTrait;
 use Exception;
 
 class ViewLabelsGenerator
@@ -132,7 +132,7 @@ class ViewLabelsGenerator
      * @param bool $isPlain
      * @param string $lang
      *
-     * @return CrestApps\CodeGenerator\Models\Label
+     * @return robertgarrigos\CodeGenerator\Models\Label
      */
     protected function makeModelLabel($key, array $properties, $isPlain, $lang)
     {

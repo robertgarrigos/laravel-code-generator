@@ -1,14 +1,14 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Models;
+namespace robertgarrigos\CodeGenerator\Models;
 
-use CrestApps\CodeGenerator\Support\Arr;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\Contracts\JsonWriter;
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Support\ResourceMapper;
-use CrestApps\CodeGenerator\Support\Str;
-use CrestApps\CodeGenerator\Traits\ModelTrait;
+use robertgarrigos\CodeGenerator\Support\Arr;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\Contracts\JsonWriter;
+use robertgarrigos\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Support\ResourceMapper;
+use robertgarrigos\CodeGenerator\Support\Str;
+use robertgarrigos\CodeGenerator\Traits\ModelTrait;
 use DB;
 use Exception;
 use File;
@@ -82,11 +82,11 @@ class ForeignRelationship implements JsonWriter
         $this->parameters = [];
 
         $this->parameters = [];
-		
+
         if(!is_array($parameters)){
             $parameters = Arr::fromString($parameters, '|');
         }
-		
+
         foreach ($parameters as $parameter) {
             $this->parameters[] = Str::eliminateDupilcates($parameter, "\\");
         }
@@ -355,7 +355,7 @@ class ForeignRelationship implements JsonWriter
     /**
      * Gets the foreign model fields from resource file
      *
-     * @return mix (null | CrestApps\CodeGenerator\Models\Resource)
+     * @return mix (null | robertgarrigos\CodeGenerator\Models\Resource)
      */
     protected function getForeignResource()
     {
@@ -364,7 +364,7 @@ class ForeignRelationship implements JsonWriter
         $resourceFile = ResourceMapper::pluckFirst($modelName) ?: Helpers::makeJsonFileName($modelName);
 
         if (File::exists(Config::getResourceFilePath($resourceFile))) {
-            return Resource::fromFile($resourceFile, 'crestapps');
+            return Resource::fromFile($resourceFile, 'robertgarrigos');
         }
 
         return null;
@@ -425,7 +425,7 @@ class ForeignRelationship implements JsonWriter
      * @param array $options
      * @throws Exception
      *
-     * @return mix (null | CrestApps\CodeGenerator\Model\ForeignRelationship)
+     * @return mix (null | robertgarrigos\CodeGenerator\Model\ForeignRelationship)
      */
     public static function get(array $options)
     {
@@ -438,9 +438,9 @@ class ForeignRelationship implements JsonWriter
 					$values[2],
 					$values[0],
 					$field
-				);				
+				);
 			}
-			
+
 			return null;
 		}
 
@@ -471,7 +471,7 @@ class ForeignRelationship implements JsonWriter
      *
      * @param string $rawRelation
      *
-     * @return null | CrestApps\CodeGenerator\Model\ForeignRelationship
+     * @return null | robertgarrigos\CodeGenerator\Model\ForeignRelationship
      */
     public static function fromString($rawRelation)
     {
@@ -514,7 +514,7 @@ class ForeignRelationship implements JsonWriter
      * @param string $fieldName
      * @param string $modelPath
      *
-     * @return null | CrestApps\CodeGenerator\Model\ForeignRelationship
+     * @return null | robertgarrigos\CodeGenerator\Model\ForeignRelationship
      */
     public static function predict($fieldName, $modelPath)
     {

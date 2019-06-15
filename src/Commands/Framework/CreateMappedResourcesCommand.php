@@ -1,12 +1,12 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands\Framework;
+namespace robertgarrigos\CodeGenerator\Commands\Framework;
 
-use CrestApps\CodeGenerator\Models\Bases\ScaffoldInputBase;
-use CrestApps\CodeGenerator\Models\ScaffoldInput;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Traits\CommonCommand;
+use robertgarrigos\CodeGenerator\Models\Bases\ScaffoldInputBase;
+use robertgarrigos\CodeGenerator\Models\ScaffoldInput;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Traits\CommonCommand;
 use Exception;
 use Illuminate\Console\Command;
 
@@ -122,9 +122,9 @@ class CreateMappedResourcesCommand extends Command
      * Gets valid input collection
      *
      * @param array $object
-     * @param CrestApps\CodeGenerator\Models\ResourceInput $input
+     * @param robertgarrigos\CodeGenerator\Models\ResourceInput $input
      *
-     * @return array of CrestApps\CodeGenerator\Models\ScaffoldInput
+     * @return array of robertgarrigos\CodeGenerator\Models\ScaffoldInput
      */
     protected function getValidInputs(array $objects, ScaffoldInput $originalInput)
     {
@@ -245,7 +245,7 @@ class CreateMappedResourcesCommand extends Command
     /**
      * Gets a clean user inputs.
      *
-     * @return CrestApps\CodeGenerator\Models\ScaffoldInput
+     * @return robertgarrigos\CodeGenerator\Models\ScaffoldInput
      */
     protected function getCommandInput()
     {

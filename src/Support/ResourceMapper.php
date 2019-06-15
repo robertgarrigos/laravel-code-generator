@@ -1,18 +1,18 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Support;
+namespace robertgarrigos\CodeGenerator\Support;
 
-use CrestApps\CodeGenerator\Models\Resource;
-use CrestApps\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Models\Resource;
+use robertgarrigos\CodeGenerator\Support\Helpers;
 use Exception;
 use File;
 use Illuminate\Console\Command;
-use CrestApps\CodeGenerator\Traits\CommonCommand;
+use robertgarrigos\CodeGenerator\Traits\CommonCommand;
 
 class ResourceMapper
 {
 	use CommonCommand;
-	
+
     /**
      * @param Illuminate\Console\Command
      */
@@ -139,20 +139,20 @@ class ResourceMapper
                 $finalMaps[] = (object) $existingMap;
             }
         }
-		
+
         $this->putContentInFile($file, Helpers::prettifyJson($finalMaps));
     }
 
     /**
      * Gets the resources
      *
-     * @return CrestApps\CodeGenerator\Models\Resource
+     * @return robertgarrigos\CodeGenerator\Models\Resource
      */
     protected function getResources()
     {
         $content = File::get($file);
 
-        return Resource::fromJson($content, 'crestapps');
+        return Resource::fromJson($content, 'robertgarrigos');
     }
 
     /**

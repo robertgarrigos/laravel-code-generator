@@ -1,8 +1,8 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands\Views;
+namespace robertgarrigos\CodeGenerator\Commands\Views;
 
-use CrestApps\CodeGenerator\Traits\CommonCommand;
+use robertgarrigos\CodeGenerator\Traits\CommonCommand;
 use Illuminate\Console\Command;
 
 class CreateLayoutCommand extends Command

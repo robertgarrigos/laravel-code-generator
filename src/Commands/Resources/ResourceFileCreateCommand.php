@@ -1,16 +1,16 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands\Resources;
+namespace robertgarrigos\CodeGenerator\Commands\Resources;
 
-use CrestApps\CodeGenerator\Commands\Bases\ResourceFileCreatorCommandBase;
-use CrestApps\CodeGenerator\Models\ForeignRelationship;
-use CrestApps\CodeGenerator\Models\Index;
-use CrestApps\CodeGenerator\Models\Resource;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\FieldTransformer;
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Support\ResourceMapper;
-use CrestApps\CodeGenerator\Traits\LanguageTrait;
+use robertgarrigos\CodeGenerator\Commands\Bases\ResourceFileCreatorCommandBase;
+use robertgarrigos\CodeGenerator\Models\ForeignRelationship;
+use robertgarrigos\CodeGenerator\Models\Index;
+use robertgarrigos\CodeGenerator\Models\Resource;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\FieldTransformer;
+use robertgarrigos\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Support\ResourceMapper;
+use robertgarrigos\CodeGenerator\Traits\LanguageTrait;
 
 class ResourceFileCreateCommand extends ResourceFileCreatorCommandBase
 {
@@ -70,7 +70,7 @@ class ResourceFileCreateCommand extends ResourceFileCreatorCommandBase
         $resource = new Resource($fields, $relations, $indexes);
 
         $resource->setDefaultApiDocLabels($input->modelName, self::makeLocaleGroup($input->modelName), $input->translationFor);
-	
+
         $this->createFile($file, Helpers::prettifyJson($resource->toArray()))
             ->info('The "' . basename($file) . '" file was crafted successfully!');
     }

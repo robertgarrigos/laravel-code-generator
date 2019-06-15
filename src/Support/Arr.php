@@ -1,8 +1,8 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Support;
+namespace robertgarrigos\CodeGenerator\Support;
 
-use CrestApps\CodeGenerator\Support\Str;
+use robertgarrigos\CodeGenerator\Support\Str;
 use Illuminate\Support\Arr as LaravelArr;
 
 class Arr extends LaravelArr

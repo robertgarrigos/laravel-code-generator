@@ -1,8 +1,8 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands\Bases;
+namespace robertgarrigos\CodeGenerator\Commands\Bases;
 
-use CrestApps\CodeGenerator\Traits\Migration;
+use robertgarrigos\CodeGenerator\Traits\Migration;
 use Illuminate\Console\Command;
 
 class MigrationCommandBase extends Command

@@ -1,13 +1,13 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands\ApiDocs;
+namespace robertgarrigos\CodeGenerator\Commands\ApiDocs;
 
-use CrestApps\CodeGenerator\Commands\Bases\ControllerCommandBase;
-use CrestApps\CodeGenerator\Models\Resource;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Traits\ApiDocViewsTrait;
-use CrestApps\CodeGenerator\Traits\LanguageTrait;
+use robertgarrigos\CodeGenerator\Commands\Bases\ControllerCommandBase;
+use robertgarrigos\CodeGenerator\Models\Resource;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Traits\ApiDocViewsTrait;
+use robertgarrigos\CodeGenerator\Traits\LanguageTrait;
 
 class CreateApiDocsControllerCommand extends ControllerCommandBase
 {

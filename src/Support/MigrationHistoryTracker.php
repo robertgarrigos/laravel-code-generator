@@ -1,11 +1,11 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Support;
+namespace robertgarrigos\CodeGenerator\Support;
 
-use CrestApps\CodeGenerator\Models\MigrationCapsule;
-use CrestApps\CodeGenerator\Models\MigrationTrackerCapsule;
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Traits\Migration;
+use robertgarrigos\CodeGenerator\Models\MigrationCapsule;
+use robertgarrigos\CodeGenerator\Models\MigrationTrackerCapsule;
+use robertgarrigos\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Traits\Migration;
 use File;
 
 class MigrationHistoryTracker
@@ -67,7 +67,7 @@ class MigrationHistoryTracker
     /**
      * Gets a migration capsule from the file if any
      *
-     * @return mix (null || CrestApps\CodeGenerator\Models\MigrationTrackerCapsule)
+     * @return mix (null || robertgarrigos\CodeGenerator\Models\MigrationTrackerCapsule)
      */
     public function get($tableName)
     {
@@ -123,8 +123,8 @@ class MigrationHistoryTracker
     /**
      * Adds properties to the migration tracker
      *
-     * @param CrestApps\CodeGenerator\Models\MigrationTrackerCapsule
-     * @param CrestApps\CodeGenerator\Models\MigrationCapsule $migration
+     * @param robertgarrigos\CodeGenerator\Models\MigrationTrackerCapsule
+     * @param robertgarrigos\CodeGenerator\Models\MigrationCapsule $migration
      *
      * @return array
      */

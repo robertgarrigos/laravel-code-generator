@@ -1,11 +1,11 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands\Framework;
+namespace robertgarrigos\CodeGenerator\Commands\Framework;
 
-use CrestApps\CodeGenerator\Commands\Bases\ControllerRequestCommandBase;
-use CrestApps\CodeGenerator\Models\Resource;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Commands\Bases\ControllerRequestCommandBase;
+use robertgarrigos\CodeGenerator\Models\Resource;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\Helpers;
 
 class CreateFormRequestCommand extends ControllerRequestCommandBase
 {
@@ -40,7 +40,7 @@ class CreateFormRequestCommand extends ControllerRequestCommandBase
     {
         $input = $this->getCommandInput();
 
-        $resources = Resource::fromFile($input->resourceFile, 'crestapps');
+        $resources = Resource::fromFile($input->resourceFile, 'robertgarrigos');
 
         $destenationFile = $this->getDestenationFile($input->fileName, $input->formRequestDirectory);
 
@@ -69,7 +69,7 @@ class CreateFormRequestCommand extends ControllerRequestCommandBase
     /**
      * Build the model class with the given name.
      *
-     * @param  CrestApps\CodeGenerator\Models\Resource $resource
+     * @param  robertgarrigos\CodeGenerator\Models\Resource $resource
      * @param string $destenationFile
      *
      * @return bool

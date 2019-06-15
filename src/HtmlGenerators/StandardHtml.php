@@ -1,12 +1,12 @@
 <?php
 
-namespace CrestApps\CodeGenerator\HtmlGenerators;
+namespace robertgarrigos\CodeGenerator\HtmlGenerators;
 
-use CrestApps\CodeGenerator\HtmlGenerators\HtmlGeneratorBase;
-use CrestApps\CodeGenerator\Models\Field;
-use CrestApps\CodeGenerator\Models\Label;
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Support\ViewLabelsGenerator;
+use robertgarrigos\CodeGenerator\HtmlGenerators\HtmlGeneratorBase;
+use robertgarrigos\CodeGenerator\Models\Field;
+use robertgarrigos\CodeGenerator\Models\Label;
+use robertgarrigos\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Support\ViewLabelsGenerator;
 
 class StandardHtml extends HtmlGeneratorBase
 {
@@ -73,7 +73,7 @@ class StandardHtml extends HtmlGeneratorBase
     /**
      * Get the placeholder attribute.
      *
-     * @param CrestApps\CodeGenerator\Models\Label $placeholder
+     * @param robertgarrigos\CodeGenerator\Models\Label $placeholder
      *
      * @return string
      */
@@ -89,7 +89,7 @@ class StandardHtml extends HtmlGeneratorBase
     /**
      * Get the placeholder attribute for a menu.
      *
-     * @param CrestApps\CodeGenerator\Models\Label $placeholder
+     * @param robertgarrigos\CodeGenerator\Models\Label $placeholder
      * @param string $name
      *
      * @return string
@@ -118,7 +118,7 @@ class StandardHtml extends HtmlGeneratorBase
     /**
      * It gets converts an array to a stringbase array for the views.
      *
-     * @param CrestApps\CodeGenerator\Models\Field $field
+     * @param robertgarrigos\CodeGenerator\Models\Field $field
      *
      * @return string
      */
@@ -136,7 +136,7 @@ class StandardHtml extends HtmlGeneratorBase
     /**
      * Gets a plain title from a given label.
      *
-     * @param CrestApps\CodeGenerator\Models\Label $label
+     * @param robertgarrigos\CodeGenerator\Models\Label $label
      * @param bool $raw
      *
      * @return string
@@ -297,7 +297,7 @@ class StandardHtml extends HtmlGeneratorBase
      * Creates html label.
      *
      * @param string $name
-     * @param CrestApps\CodeGenerator\Models\Label $label
+     * @param robertgarrigos\CodeGenerator\Models\Label $label
      *
      * @return string
      */
@@ -326,7 +326,7 @@ class StandardHtml extends HtmlGeneratorBase
     /**
      * Gets an instance of ViewLabelsGenerator
      *
-     * @return CrestApps\CodeGenerator\Support\ViewLabelsGenerator
+     * @return robertgarrigos\CodeGenerator\Support\ViewLabelsGenerator
      */
     protected function getViewLabelsGenerator()
     {

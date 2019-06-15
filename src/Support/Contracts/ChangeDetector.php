@@ -1,6 +1,6 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Support\Contracts;
+namespace robertgarrigos\CodeGenerator\Support\Contracts;
 
 interface ChangeDetector
 {

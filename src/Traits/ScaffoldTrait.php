@@ -1,6 +1,6 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Traits;
+namespace robertgarrigos\CodeGenerator\Traits;
 
 trait ScaffoldTrait
 {

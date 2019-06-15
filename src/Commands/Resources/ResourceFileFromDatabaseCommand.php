@@ -1,19 +1,19 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands\Resources;
+namespace robertgarrigos\CodeGenerator\Commands\Resources;
 
-use CrestApps\CodeGenerator\Commands\Bases\ResourceFileCommandBase;
-use CrestApps\CodeGenerator\Models\Field;
-use CrestApps\CodeGenerator\Models\MigrationCapsule;
-use CrestApps\CodeGenerator\Models\MigrationTrackerCapsule;
-use CrestApps\CodeGenerator\Models\Resource;
-use CrestApps\CodeGenerator\Support\Arr;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Support\MigrationHistoryTracker;
-use CrestApps\CodeGenerator\Support\ResourceMapper;
-use CrestApps\CodeGenerator\Traits\LanguageTrait;
-use CrestApps\CodeGenerator\Traits\Migration;
+use robertgarrigos\CodeGenerator\Commands\Bases\ResourceFileCommandBase;
+use robertgarrigos\CodeGenerator\Models\Field;
+use robertgarrigos\CodeGenerator\Models\MigrationCapsule;
+use robertgarrigos\CodeGenerator\Models\MigrationTrackerCapsule;
+use robertgarrigos\CodeGenerator\Models\Resource;
+use robertgarrigos\CodeGenerator\Support\Arr;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Support\MigrationHistoryTracker;
+use robertgarrigos\CodeGenerator\Support\ResourceMapper;
+use robertgarrigos\CodeGenerator\Traits\LanguageTrait;
+use robertgarrigos\CodeGenerator\Traits\Migration;
 use DB;
 use Exception;
 use File;
@@ -95,7 +95,7 @@ class ResourceFileFromDatabaseCommand extends ResourceFileCommandBase
     /**
      * Creates a virtual migration in the migration tracker
      *
-     * @param CrestApps\CodeGenerator\Models\Resource $resource
+     * @param robertgarrigos\CodeGenerator\Models\Resource $resource
      * @param string $destenationFile
      * @param string $tableName
      *
@@ -128,7 +128,7 @@ class ResourceFileFromDatabaseCommand extends ResourceFileCommandBase
             throw new Exception('The database driver user is not supported!');
         }
 
-        $class = sprintf('CrestApps\CodeGenerator\DatabaseParsers\%sParser', ucfirst($driver));
+        $class = sprintf('robertgarrigos\CodeGenerator\DatabaseParsers\%sParser', ucfirst($driver));
 
         return new $class($this->getTableName(), $this->getDatabaseName(), $this->getLanguages());
     }
@@ -216,10 +216,10 @@ class ResourceFileFromDatabaseCommand extends ResourceFileCommandBase
     /**
      * Make a migration capsule
      *
-     * @param CrestApps\CodeGenerator\Models\Resource $resource
+     * @param robertgarrigos\CodeGenerator\Models\Resource $resource
      * @param string $tableName
      *
-     * @return CrestApps\CodeGenerator\Models\MigrationCapsule
+     * @return robertgarrigos\CodeGenerator\Models\MigrationCapsule
      */
     protected function getMigrationCapsule($resource, $tableName)
     {
