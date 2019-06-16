@@ -1,18 +1,18 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Support;
+namespace robertgarrigos\CodeGenerator\Support;
 
 use App;
-use CrestApps\CodeGenerator\Models\Label;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Traits\CommonCommand;
-use CrestApps\CodeGenerator\Traits\GeneratorReplacers;
+use robertgarrigos\CodeGenerator\Models\Label;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Traits\CommonCommand;
+use robertgarrigos\CodeGenerator\Traits\GeneratorReplacers;
+use robertgarrigos\CodeGenerator\Traits\LanguageTrait;
 use Exception;
 
 class ViewLabelsGenerator
 {
-    use CommonCommand, GeneratorReplacers;
+    use CommonCommand, GeneratorReplacers, LanguageTrait;
 
     /**
      * The name of the model
@@ -62,7 +62,7 @@ class ViewLabelsGenerator
 
         $this->modelName = $modelName;
         $this->fields = $fields;
-        $this->localeGroup = Helpers::makeLocaleGroup($modelName);
+        $this->localeGroup = self::makeLocaleGroup($modelName);
         $this->defaultLang = App::getLocale();
         $this->isCollectiveTemplate = $isCollectiveTemplate;
     }
@@ -98,7 +98,7 @@ class ViewLabelsGenerator
      */
     public function getLabels()
     {
-        $languages = array_keys(Helpers::getLanguageItems($this->fields));
+        $languages = array_keys(self::getLanguageItems($this->fields));
 
         if (count($languages) > 0) {
             return $this->getTranslatedLabels($languages);
@@ -132,7 +132,7 @@ class ViewLabelsGenerator
      * @param bool $isPlain
      * @param string $lang
      *
-     * @return CrestApps\CodeGenerator\Models\Label
+     * @return robertgarrigos\CodeGenerator\Models\Label
      */
     protected function makeModelLabel($key, array $properties, $isPlain, $lang)
     {
@@ -140,9 +140,7 @@ class ViewLabelsGenerator
 
         $this->replaceModelName($text, $this->modelName);
 
-        $localeKey = sprintf('%s.%s', $this->localeGroup, $key);
-
-        $label = new Label($text, $localeKey, $isPlain, $lang, $key);
+        $label = new Label($text, $this->localeGroup, $isPlain, $lang, $key);
         $label->template = $properties['template'];
         $label->isInFunction = $this->isInFunction($properties);
 

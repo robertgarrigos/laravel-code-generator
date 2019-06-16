@@ -1,19 +1,24 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Models;
+namespace robertgarrigos\CodeGenerator\Models;
 
-use CrestApps\CodeGenerator\Models\ForeignRelationship;
-use CrestApps\CodeGenerator\Models\Index;
-use CrestApps\CodeGenerator\Models\Relation;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\Contracts\JsonWriter;
-use CrestApps\CodeGenerator\Support\FieldTransformer;
-use CrestApps\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Models\ForeignRelationship;
+use robertgarrigos\CodeGenerator\Models\Index;
+use robertgarrigos\CodeGenerator\Models\Relation;
+use robertgarrigos\CodeGenerator\Support\Arr;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\Contracts\JsonWriter;
+use robertgarrigos\CodeGenerator\Support\FieldTransformer;
+use robertgarrigos\CodeGenerator\Traits\CommonCommand;
+use robertgarrigos\CodeGenerator\Traits\GeneratorReplacers;
+use robertgarrigos\CodeGenerator\Traits\LabelTransformerTrait;
 use Exception;
 use File;
 
 class Resource implements JsonWriter
 {
+    use CommonCommand, GeneratorReplacers, LabelTransformerTrait;
+
     /**
      * The resource fields
      *
@@ -57,6 +62,13 @@ class Resource implements JsonWriter
     private $protection = [];
 
     /**
+     * Array of the protected resources.
+     *
+     * @var array
+     */
+    private $apiDocumentationLabels = [];
+
+    /**
      * Array of the protectable resource names.
      *
      * @var array
@@ -64,6 +76,10 @@ class Resource implements JsonWriter
     protected $protectableResources = [
         'model',
         'controller',
+        'api-resource',
+        'api-resource-collection',
+        'api-documentation',
+        'api-documentation-controller',
         'form-request',
         'languages',
         'form-view',
@@ -208,25 +224,33 @@ class Resource implements JsonWriter
     /**
      * Get the first header field if available
      *
-     * @return min (null | CrestApps\CodeGenerator\Models\Field)
+     * @return min (null | robertgarrigos\CodeGenerator\Models\Field)
      */
     public function getHeaderField()
     {
-        return collect($this->fields)->first(function ($field) {
-            return $field->isHeader();
-        });
+        foreach ($this->fields as $field) {
+            if ($field->isHeader()) {
+                return $field;
+            }
+        }
+
+        return null;
     }
 
     /**
      * Get the first primary field if available
      *
-     * @return mix (null | CrestApps\CodeGenerator\Models\Field)
+     * @return mix (null | robertgarrigos\CodeGenerator\Models\Field)
      */
     public function getPrimaryField()
     {
-        return collect($this->fields)->first(function ($field) {
-            return $field->isPrimary();
-        });
+        foreach ($this->fields as $field) {
+            if ($field->isPrimary()) {
+                return $field;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -330,21 +354,122 @@ class Resource implements JsonWriter
     }
 
     /**
+     * Sets the api-doc labels.
+     *
+     * @param string $modelName
+     * @param string $localeGroup
+     * @param array $languages
+     *
+     * @return $this
+     */
+    public function setDefaultApiDocLabels($modelName, $localeGroup, array $languages = null)
+    {
+
+        foreach (Config::getApiDocumentationLabels() as $key => $text) {
+
+            $this->replaceModelName($text, $modelName);
+
+            if (!empty($languages)) {
+                foreach ($languages as $language) {
+                    $this->addApiDocLabel($text, $localeGroup, $key, false, $language);
+                }
+
+                continue;
+            }
+
+            $this->addApiDocLabel($text, $localeGroup, $key);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Adds the given key and value to the apiDocumentationLabels collection
+     *
+     * @param string $key
+     * @param mix (string|array) $text
+     *
+     * @return void
+     */
+    public function addApiDocLabel($text, $localeGroup, $key, $isPlain = true, $lang = 'en')
+    {
+        $this->apiDocumentationLabels[$lang][] = new Label($text, $localeGroup, $isPlain, $lang, $key);
+    }
+
+    /**
+     * Gets current api-doc-labels
+     *
+     * @return array
+     */
+    public function getApiDocLabels()
+    {
+        return $this->apiDocumentationLabels ?: [];
+    }
+
+    /**
+     * Gets translatable api-doc-labels
+     *
+     * @return array
+     */
+    public function getTranslatedApiDocLabels()
+    {
+        $output = [];
+
+        foreach ($this->getApiDocLabels() as $lang => $labels) {
+
+            foreach ($labels as $label) {
+                if (!$label->isPlain) {
+                    $output[$lang][] = $label;
+                }
+            }
+
+        }
+
+        return $output;
+    }
+
+    /**
      * Converts the object into a json-ready array
      *
      * @return array
      */
     public function toArray()
     {
-        return
-            [
+        return [
             'fields' => $this->getFieldsToArray(),
             'relations' => $this->getRelationsToArray(),
             'indexes' => $this->getIndexesToArray(),
             'auto-manage-created-and-updated-at' => $this->isCreateAndUpdateAtManaged(),
             'table-name' => $this->getTableName(),
             'protection' => $this->getRawProtections(),
+            'api-documentation' => $this->getRawApiDocLabels(),
         ];
+    }
+
+    /**
+     * Converts the api-documentation labels object into json-ready array.
+     *
+     * @return array
+     */
+    protected function getRawApiDocLabels()
+    {
+        $output = [];
+
+        foreach ($this->getApiDocLabels() as $lang => $labels) {
+
+            foreach ($labels as $label) {
+                if ($label->isPlain) {
+                    $output[$label->id] = $label->text;
+
+                    continue;
+                }
+
+                $output[$label->id][$label->lang] = $label->text;
+            }
+
+        }
+
+        return $output;
     }
 
     /**
@@ -417,7 +542,7 @@ class Resource implements JsonWriter
      * @param string $localeGroup
      * @param array $languages
      *
-     * @return CrestApps\CodeGenerator\Models\Resource
+     * @return robertgarrigos\CodeGenerator\Models\Resource
      */
     public static function fromFile($filename, $localeGroup, array $languages = [])
     {
@@ -433,7 +558,7 @@ class Resource implements JsonWriter
      * @param string $localeGroup
      * @param array $languages
      *
-     * @return CrestApps\CodeGenerator\Models\Resource
+     * @return robertgarrigos\CodeGenerator\Models\Resource
      */
     public static function fromJson($json, $localeGroup, array $languages = [])
     {
@@ -441,7 +566,7 @@ class Resource implements JsonWriter
             throw new Exception("The provided string is not a valid json.");
         }
 
-        if (is_array($capsule) && !Helpers::isAssociative($capsule)) {
+        if (is_array($capsule) && !Arr::isAssociative($capsule)) {
             // At this point we know the resource file is` using old convention
             // Set the fields
             $fields = FieldTransformer::fromArray($capsule, $localeGroup, $languages, true);
@@ -459,7 +584,7 @@ class Resource implements JsonWriter
      * @param string $localeGroup
      * @param array $languages
      *
-     * @return CrestApps\CodeGenerator\Models\Resource
+     * @return robertgarrigos\CodeGenerator\Models\Resource
      */
     public static function fromArray(array $properties, $localeGroup, array $languages = [])
     {
@@ -486,11 +611,23 @@ class Resource implements JsonWriter
         }
 
         if (array_key_exists('protection', $properties) && is_array($properties['protection'])) {
-
             foreach ($properties['protection'] as $name => $value) {
                 $resource->setProtection($name, $value);
             }
+        }
 
+        if (array_key_exists('api-documentation', $properties) && is_array($properties['api-documentation'])) {
+            foreach ($properties['api-documentation'] as $key => $text) {
+                if (is_array($text)) {
+
+                    foreach ($text as $lang => $msg) {
+                        $resource->addApiDocLabel($msg, $localeGroup, $key, false, $lang);
+                    }
+                    continue;
+                }
+
+                $resource->addApiDocLabel($text, $localeGroup, $key);
+            }
         }
 
         return $resource;

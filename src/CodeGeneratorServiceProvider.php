@@ -1,8 +1,8 @@
 <?php
 
-namespace CrestApps\CodeGenerator;
+namespace robertgarrigos\CodeGenerator;
 
-use CrestApps\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Support\Helpers;
 use File;
 use Illuminate\Support\ServiceProvider;
 
@@ -17,22 +17,20 @@ class CodeGeneratorServiceProvider extends ServiceProvider
     {
         $dir = __DIR__ . '/../';
 
+        // publish the config base file
         $this->publishes([
-            $dir . 'config/codegenerator.php' => config_path('codegenerator.php'),
+            $dir . 'config/laravel-code-generator.php' => config_path('laravel-code-generator.php'),
+        ], 'config');
+
+        // publish the default-template
+        $this->publishes([
             $dir . 'templates/default' => $this->codeGeneratorBase('templates/default'),
-        ], 'default');
+        ], 'default-template');
 
-        if (!File::exists(config_path('codegenerator_custom.php'))) {
-            $this->publishes([
-                $dir . 'config/codegenerator_custom.php' => config_path('codegenerator_custom.php'),
-            ], 'default');
-        }
-
+        // publish the defaultcollective-template
         $this->publishes([
             $dir . 'templates/default-collective' => $this->codeGeneratorBase('templates/default-collective'),
-        ], 'default-collective');
-
-        $this->createDirectory($this->codeGeneratorBase('sources'));
+        ], 'default-collective-template');
     }
 
     /**
@@ -42,38 +40,53 @@ class CodeGeneratorServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $commands = [
-            'CrestApps\CodeGenerator\Commands\CreateControllerCommand',
-            'CrestApps\CodeGenerator\Commands\CreateModelCommand',
-            'CrestApps\CodeGenerator\Commands\CreateIndexViewCommand',
-            'CrestApps\CodeGenerator\Commands\CreateCreateViewCommand',
-            'CrestApps\CodeGenerator\Commands\CreateFormViewCommand',
-            'CrestApps\CodeGenerator\Commands\CreateEditViewCommand',
-            'CrestApps\CodeGenerator\Commands\CreateShowViewCommand',
-            'CrestApps\CodeGenerator\Commands\CreateViewsCommand',
-            'CrestApps\CodeGenerator\Commands\CreateLanguageCommand',
-            'CrestApps\CodeGenerator\Commands\CreateFormRequestCommand',
-            'CrestApps\CodeGenerator\Commands\CreateRoutesCommand',
-            'CrestApps\CodeGenerator\Commands\CreateMigrationCommand',
-            'CrestApps\CodeGenerator\Commands\CreateResourcesCommand',
-            'CrestApps\CodeGenerator\Commands\CreateMappedResourcesCommand',
-            'CrestApps\CodeGenerator\Commands\CreateViewLayoutCommand',
-            'CrestApps\CodeGenerator\Commands\CreateLayoutCommand',
-            'CrestApps\CodeGenerator\Commands\ResourceFileFromDatabaseCommand',
-            'CrestApps\CodeGenerator\Commands\ResourceFileCreateCommand',
-            'CrestApps\CodeGenerator\Commands\ResourceFileDeleteCommand',
-            'CrestApps\CodeGenerator\Commands\ResourceFileAppendCommand',
-            'CrestApps\CodeGenerator\Commands\ResourceFileReduceCommand',
+        $commands =
+            [
+            'robertgarrigos\CodeGenerator\Commands\Framework\CreateControllerCommand',
+            'robertgarrigos\CodeGenerator\Commands\Framework\CreateModelCommand',
+            'robertgarrigos\CodeGenerator\Commands\Framework\CreateLanguageCommand',
+            'robertgarrigos\CodeGenerator\Commands\Framework\CreateFormRequestCommand',
+            'robertgarrigos\CodeGenerator\Commands\Framework\CreateRoutesCommand',
+            'robertgarrigos\CodeGenerator\Commands\Framework\CreateMigrationCommand',
+            'robertgarrigos\CodeGenerator\Commands\Framework\CreateScaffoldCommand',
+            'robertgarrigos\CodeGenerator\Commands\Framework\CreateResourcesCommand',
+            'robertgarrigos\CodeGenerator\Commands\Framework\CreateMappedResourcesCommand',
+            'robertgarrigos\CodeGenerator\Commands\Resources\ResourceFileFromDatabaseCommand',
+            'robertgarrigos\CodeGenerator\Commands\Resources\ResourceFileCreateCommand',
+            'robertgarrigos\CodeGenerator\Commands\Resources\ResourceFileDeleteCommand',
+            'robertgarrigos\CodeGenerator\Commands\Resources\ResourceFileAppendCommand',
+            'robertgarrigos\CodeGenerator\Commands\Resources\ResourceFileReduceCommand',
+            'robertgarrigos\CodeGenerator\Commands\Views\CreateIndexViewCommand',
+            'robertgarrigos\CodeGenerator\Commands\Views\CreateCreateViewCommand',
+            'robertgarrigos\CodeGenerator\Commands\Views\CreateFormViewCommand',
+            'robertgarrigos\CodeGenerator\Commands\Views\CreateEditViewCommand',
+            'robertgarrigos\CodeGenerator\Commands\Views\CreateShowViewCommand',
+            'robertgarrigos\CodeGenerator\Commands\Views\CreateViewsCommand',
+            'robertgarrigos\CodeGenerator\Commands\Views\CreateViewLayoutCommand',
+            'robertgarrigos\CodeGenerator\Commands\Views\CreateLayoutCommand',
+            'robertgarrigos\CodeGenerator\Commands\Api\CreateApiControllerCommand',
+            'robertgarrigos\CodeGenerator\Commands\Api\CreateApiScaffoldCommand',
+            'robertgarrigos\CodeGenerator\Commands\ApiDocs\CreateApiDocsControllerCommand',
+            'robertgarrigos\CodeGenerator\Commands\ApiDocs\CreateApiDocsScaffoldCommand',
+            'robertgarrigos\CodeGenerator\Commands\ApiDocs\CreateApiDocsViewCommand',
         ];
 
         if (Helpers::isNewerThanOrEqualTo()) {
-            $commands = array_merge($commands, [
-                'CrestApps\CodeGenerator\Commands\Migrations\MigrateAllCommand',
-                'CrestApps\CodeGenerator\Commands\Migrations\RefreshAllCommand',
-                'CrestApps\CodeGenerator\Commands\Migrations\ResetAllCommand',
-                'CrestApps\CodeGenerator\Commands\Migrations\RollbackAllCommand',
-                'CrestApps\CodeGenerator\Commands\Migrations\StatusAllCommand',
-            ]);
+            $commands = array_merge($commands,
+                [
+                    'robertgarrigos\CodeGenerator\Commands\Migrations\MigrateAllCommand',
+                    'robertgarrigos\CodeGenerator\Commands\Migrations\RefreshAllCommand',
+                    'robertgarrigos\CodeGenerator\Commands\Migrations\ResetAllCommand',
+                    'robertgarrigos\CodeGenerator\Commands\Migrations\RollbackAllCommand',
+                    'robertgarrigos\CodeGenerator\Commands\Migrations\StatusAllCommand',
+                ]);
+        }
+
+        if (Helpers::isApiResourceSupported()) {
+            $commands = array_merge($commands,
+                [
+                    'robertgarrigos\CodeGenerator\Commands\Api\CreateApiResourceCommand',
+                ]);
         }
 
         $this->commands($commands);

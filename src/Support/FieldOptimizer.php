@@ -1,11 +1,11 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Support;
+namespace robertgarrigos\CodeGenerator\Support;
 
-use CrestApps\CodeGenerator\Models\Field;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\ValidationParser;
-use CrestApps\CodeGenerator\Traits\CommonCommand;
+use robertgarrigos\CodeGenerator\Models\Field;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\ValidationParser;
+use robertgarrigos\CodeGenerator\Traits\CommonCommand;
 
 class FieldOptimizer
 {
@@ -14,7 +14,7 @@ class FieldOptimizer
     /**
      * The field to optimize
      *
-     * @var CrestApps\CodeGenerator\Models\Field
+     * @var robertgarrigos\CodeGenerator\Models\Field
      */
     protected $field;
 
@@ -35,7 +35,7 @@ class FieldOptimizer
     /**
      * Create a new optemizer instance.
      *
-     * @param CrestApps\CodeGenerator\Models\Field $field
+     * @param robertgarrigos\CodeGenerator\Models\Field $field
      * @param array $meta
      *
      * @return void
@@ -50,7 +50,7 @@ class FieldOptimizer
     /**
      * Gets the optimized field.
      *
-     * @return CrestApps\CodeGenerator\Models\Field
+     * @return robertgarrigos\CodeGenerator\Models\Field
      */
     public function getField()
     {
@@ -202,7 +202,7 @@ class FieldOptimizer
      * Ensure, the datatype is set to be valid otherwise make it "int".
      * It also make sure the primary column does not appears on the views unless it specified
      *
-     * @param CrestApps\CodeGenerator\Models\Field $this->field
+     * @param robertgarrigos\CodeGenerator\Models\Field $this->field
      *
      * @return $this
      */
@@ -210,7 +210,6 @@ class FieldOptimizer
     {
         if ($this->field->isPrimary()) {
 			$this->field->isNullable = false;
-				
             if ($this->meta == null) {
                 $this->field->isOnFormView = false;
                 $this->field->isOnIndexView = false;

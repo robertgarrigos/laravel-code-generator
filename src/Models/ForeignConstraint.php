@@ -1,16 +1,16 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Models;
+namespace robertgarrigos\CodeGenerator\Models;
 
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\Contracts\JsonWriter;
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Support\Str;
-use CrestApps\CodeGenerator\Traits\CommonCommand;
+use robertgarrigos\CodeGenerator\Support\Arr;
+use robertgarrigos\CodeGenerator\Support\Contracts\JsonWriter;
+use robertgarrigos\CodeGenerator\Support\Str;
+use robertgarrigos\CodeGenerator\Traits\CommonCommand;
+use robertgarrigos\CodeGenerator\Traits\ModelTrait;
 
 class ForeignConstraint implements JsonWriter
 {
-    use CommonCommand;
+    use CommonCommand, ModelTrait;
 
     /**
      * The name of the foreign field/column.
@@ -92,7 +92,7 @@ class ForeignConstraint implements JsonWriter
     public function getReferencesModel()
     {
         if (empty($this->referencesModel)) {
-            $this->referencesModel = $this->getModelNamespace(ucfirst($this->getForeignModelName()));
+            $this->referencesModel = self::getModelNamespace($this->getForeignModelName(), null);
         }
 
         return $this->referencesModel;
@@ -111,7 +111,7 @@ class ForeignConstraint implements JsonWriter
     /**
      * Get a foreign relation.
      *
-     * @return CrestApps\CodeGenerator\Models\ForeignRelatioship
+     * @return robertgarrigos\CodeGenerator\Models\ForeignRelatioship
      */
     public function getForeignRelation()
     {
@@ -133,20 +133,6 @@ class ForeignConstraint implements JsonWriter
     }
 
     /**
-     * Get the namecpase of the foreign model.
-     *
-     * @param string $modelName
-     *
-     * @return string
-     */
-    protected function getModelNamespace($modelName)
-    {
-        $path = Helpers::getAppNamespace() . rtrim(Config::getModelsPath(), '\\');
-
-        return $path . '\\' . $modelName;
-    }
-
-    /**
      * Get the name of the foreign model.
      *
      * @param string $prefix
@@ -155,7 +141,7 @@ class ForeignConstraint implements JsonWriter
      */
     protected function getForeignModelName($prefix = '')
     {
-        return camel_case($prefix . Str::singular($this->references));
+        return ucfirst(camel_case($prefix . Str::singular($this->references)));
     }
 
     /**
@@ -202,15 +188,15 @@ class ForeignConstraint implements JsonWriter
      * @param array $properties
      * @param string $fieldName
      *
-     * @return null || CrestApps\CodeGenerator\Models\ForeignConstraint
+     * @return null || robertgarrigos\CodeGenerator\Models\ForeignConstraint
      */
     public static function fromArray(array $constraint, $fieldName)
     {
-        $onUpdate = Helpers::isKeyExists($constraint, 'on-update') ? $constraint['on-update'] : null;
-        $onDelete = Helpers::isKeyExists($constraint, 'on-delete') ? $constraint['on-delete'] : null;
-        $model = Helpers::isKeyExists($constraint, 'references-model') ? $constraint['references-model'] :
-        Helpers::guessModelFullName($fieldName, Helpers::getModelsPath());
-        $isSelfReference = Helpers::isKeyExists($constraint, 'is-self-reference') ? (bool) $constraint['is-self-reference'] : false;
+        $onUpdate = Arr::isKeyExists($constraint, 'on-update') ? $constraint['on-update'] : null;
+        $onDelete = Arr::isKeyExists($constraint, 'on-delete') ? $constraint['on-delete'] : null;
+        $model = Arr::isKeyExists($constraint, 'references-model') ? $constraint['references-model'] :
+        self::guessModelFullName($fieldName, self::getModelsPath());
+        $isSelfReference = Arr::isKeyExists($constraint, 'is-self-reference') ? (bool) $constraint['is-self-reference'] : false;
 
         return new self(
             $constraint['field'],

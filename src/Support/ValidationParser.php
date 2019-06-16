@@ -1,6 +1,6 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Support;
+namespace robertgarrigos\CodeGenerator\Support;
 
 class ValidationParser
 {
@@ -88,7 +88,6 @@ class ValidationParser
      * @var mix
      */
     protected $string;
-
 
     /**
      * Creates a new parser instance.
@@ -239,7 +238,7 @@ class ValidationParser
      */
     public function isString()
     {
-        return $this->getSetValue('string') && ! $this->isValidNumber();
+        return $this->getSetValue('string') && !$this->isValidNumber();
     }
 
     /**

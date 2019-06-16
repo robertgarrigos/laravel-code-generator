@@ -1,20 +1,23 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Models;
+namespace robertgarrigos\CodeGenerator\Models;
 
 use App;
-use CrestApps\CodeGenerator\Models\ForeignRelationhip;
-use CrestApps\CodeGenerator\Models\Label;
-use CrestApps\CodeGenerator\Support\Config;
-use CrestApps\CodeGenerator\Support\Contracts\JsonWriter;
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Traits\CommonCommand;
-use CrestApps\CodeGenerator\Traits\GeneratorReplacers;
+use robertgarrigos\CodeGenerator\Models\ForeignRelationhip;
+use robertgarrigos\CodeGenerator\Models\Label;
+use robertgarrigos\CodeGenerator\Support\Arr;
+use robertgarrigos\CodeGenerator\Support\Config;
+use robertgarrigos\CodeGenerator\Support\Contracts\JsonWriter;
+use robertgarrigos\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Support\Str;
+use robertgarrigos\CodeGenerator\Traits\CommonCommand;
+use robertgarrigos\CodeGenerator\Traits\GeneratorReplacers;
+use robertgarrigos\CodeGenerator\Traits\ModelTrait;
 use Exception;
 
 class Field implements JsonWriter
 {
-    use CommonCommand, GeneratorReplacers;
+    use CommonCommand, GeneratorReplacers, ModelTrait;
 
     /**
      * The apps default language
@@ -318,14 +321,14 @@ class Field implements JsonWriter
     /**
      * The foreign relations
      *
-     * @var CrestApps\CodeGenerator\Models\ForeignRelationhip
+     * @var robertgarrigos\CodeGenerator\Models\ForeignRelationhip
      */
     private $foreignRelation;
 
     /**
      * The foreign Constraint.
      *
-     * @var CrestApps\CodeGenerator\Models\ForeignConstraint
+     * @var robertgarrigos\CodeGenerator\Models\ForeignConstraint
      */
     private $foreignConstraint;
 
@@ -356,6 +359,27 @@ class Field implements JsonWriter
      * @var bool
      */
     public $flaggedForDelete = false;
+
+    /**
+     * The name to be used by the public when accessing the API.
+     *
+     * @var string
+     */
+    public $apiKey;
+
+    /**
+     * Should this field be visible to API
+     *
+     * @var string
+     */
+    public $isApiVisible = true;
+
+    /**
+     * The labels of the api-description
+     *
+     * @var array
+     */
+    private $apiDescription = [];
 
     /**
      * Creates a new field instance.
@@ -417,7 +441,7 @@ class Field implements JsonWriter
      *
      * @param string $lang
      *
-     * @return CrestApps\CodeGenerator\Models\Label
+     * @return robertgarrigos\CodeGenerator\Models\Label
      */
     public function getLabel($lang = null)
     {
@@ -435,7 +459,7 @@ class Field implements JsonWriter
      *
      * @param string $lang
      *
-     * @return CrestApps\CodeGenerator\Models\Label
+     * @return robertgarrigos\CodeGenerator\Models\Label
      */
     public function getPlaceholder($lang = null)
     {
@@ -461,7 +485,7 @@ class Field implements JsonWriter
     /**
      * Gets the first available label if any.
      *
-     * @return CrestApps\CodeGenerator\Models\Label
+     * @return robertgarrigos\CodeGenerator\Models\Label
      */
     public function getFirstLabel()
     {
@@ -471,7 +495,7 @@ class Field implements JsonWriter
     /**
      * Gets the first available placeholder if any.
      *
-     * @return CrestApps\CodeGenerator\Models\Label | null
+     * @return robertgarrigos\CodeGenerator\Models\Label | null
      */
     public function getFirstPlaceholder()
     {
@@ -521,7 +545,7 @@ class Field implements JsonWriter
      */
     public function addLabel($text, $isPlain = true, $lang = 'en')
     {
-        $this->labels[$lang] = new Label($text, $this->getLocaleKey(), $isPlain, $lang, $this->name);
+        $this->labels[$lang] = new Label($text, $this->localeGroup, $isPlain, $lang, $this->name);
     }
 
     /**
@@ -535,15 +559,31 @@ class Field implements JsonWriter
      */
     public function addPlaceholder($text, $isPlain = true, $lang = 'en')
     {
-        $value = '__placeholder';
+        $id = $this->getFieldId('_placeholder');
 
-        $this->placeholders[$lang] = new Label($text, $this->getLocaleKey('_placeholder'), $isPlain, $lang, $this->name . $value);
+        $this->placeholders[$lang] = new Label($text, $this->localeGroup, $isPlain, $lang, $id);
+    }
+
+    /**
+     * Adds a label to the descriptions collection
+     *
+     * @param string $text
+     * @param bool $isPlain
+     * @param string $lang
+     *
+     * @return void
+     */
+    public function addApiDescription($text, $isPlain = true, $lang = 'en')
+    {
+        $id = $this->getFieldId('_api_description');
+
+        $this->apiDescription[$lang] = new Label($text, $this->localeGroup, $isPlain, $lang, $id);
     }
 
     /**
      * Sets the foreign relationship of the field.
      *
-     * @param CrestApps\CodeGenerator\Models\ForeignRelationship $relation
+     * @param robertgarrigos\CodeGenerator\Models\ForeignRelationship $relation
      *
      * @return void
      */
@@ -553,9 +593,46 @@ class Field implements JsonWriter
     }
 
     /**
+     * Gets a value accessor for the field.
+     *
+     * @param string $variable
+     * @param string $view
+     *
+     * @return string
+     */
+    public function getAccessorValue($variable, $view = null)
+    {
+        $fieldAccessor = sprintf('$%s->%s', $variable, $this->name);
+
+        if ($this->hasForeignRelation() && (empty($view) || $this->isOnView($view))) {
+            $relation = $this->getForeignRelation();
+            if (Helpers::isNewerThanOrEqualTo('5.5')) {
+                $fieldAccessor = sprintf('optional($%s->%s)->%s', $variable, $relation->name, $relation->getField());
+            } else {
+                $fieldAccessor = sprintf('$%s->%s->%s', $variable, $relation->name, $relation->getField());
+                $fieldAccessor = sprintf("isset(%s) ? %s : ''", $fieldAccessor, $fieldAccessor);
+            }
+        }
+
+        if ($this->isBoolean()) {
+            return sprintf("(%s) ? '%s' : '%s'", $fieldAccessor, $this->getTrueBooleanOption()->text, $this->getFalseBooleanOption()->text);
+        }
+
+        if ($this->isMultipleAnswers()) {
+            return sprintf("implode('%s', %s)", $this->optionsDelimiter, $fieldAccessor);
+        }
+
+        if ($this->isFile()) {
+            return $fieldAccessor;
+        }
+
+        return $fieldAccessor;
+    }
+
+    /**
      * Sets the foreign key of the field.
      *
-     * @param CrestApps\CodeGenerator\Models\ForeignConstraint $foreignConstraint
+     * @param robertgarrigos\CodeGenerator\Models\ForeignConstraint $foreignConstraint
      *
      * @return void
      */
@@ -567,7 +644,7 @@ class Field implements JsonWriter
     /**
      * It set the placeholder property for a given field
      *
-     * @param CrestApps\CodeGenerator\Models\Field $field
+     * @param robertgarrigos\CodeGenerator\Models\Field $field
      * @param array $properties
      *
      * @return $this
@@ -581,6 +658,16 @@ class Field implements JsonWriter
         }
 
         return $this;
+    }
+
+    /**
+     * Get the api-key value
+     *
+     * @return $this
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey ?: $this->name;
     }
 
     /**
@@ -628,7 +715,7 @@ class Field implements JsonWriter
     /**
      * Gets the field's foreign relationship.
      *
-     * @return CrestApps\CodeGenerator\Models\ForeignRelationhip
+     * @return robertgarrigos\CodeGenerator\Models\ForeignRelationhip
      */
     public function getForeignRelation()
     {
@@ -638,7 +725,7 @@ class Field implements JsonWriter
     /**
      * Gets the field's foreign key.
      *
-     * @return CrestApps\CodeGenerator\Models\ForeignConstraint
+     * @return robertgarrigos\CodeGenerator\Models\ForeignConstraint
      */
     public function getForeignConstraint()
     {
@@ -704,7 +791,7 @@ class Field implements JsonWriter
     {
         $id = $this->getFieldId($value);
 
-        $this->options[$lang][] = new Label($text, $this->getLocaleKey($value), $isPlain, $lang, $id, $value);
+        $this->options[$lang][] = new Label($text, $this->localeGroup, $isPlain, $lang, $id, $value);
     }
 
     /**
@@ -760,6 +847,16 @@ class Field implements JsonWriter
     }
 
     /**
+     * Get current validation rules.
+     *
+     * @return array
+     */
+    public function getValidationRules()
+    {
+        return $this->validationRules ?: [];
+    }
+
+    /**
      * Checks if this field is boolean type.
      *
      * @return bool
@@ -805,19 +902,6 @@ class Field implements JsonWriter
     }
 
     /**
-     * Creates locale key for a given languagefile
-     *
-     * @param string $stub
-     * @param string $postFix
-     *
-     * @return string
-     */
-    protected function getLocaleKey($postFix = null)
-    {
-        return sprintf('%s.%s', $this->localeGroup, $this->getFieldId($postFix));
-    }
-
-    /**
      * Gets the field Id.
      *
      * @param string $optionValue
@@ -844,7 +928,7 @@ class Field implements JsonWriter
     {
         $value = strtolower(str_replace(' ', '_', $optionValue));
 
-        return Helpers::removeNonEnglishChars($value);
+        return Str::removeNonEnglishChars($value);
     }
 
     /**
@@ -897,7 +981,20 @@ class Field implements JsonWriter
             'foreign-constraint' => $this->getForeignConstraintToRaw(),
             'on-store' => $this->onStore,
             'on-update' => $this->onUpdate,
+            'api-key' => $this->getApiKey(),
+            'is-api-visible' => $this->isApiVisible,
+            'api-description' => $this->labelsToRaw($this->getApiDescription()),
         ];
+    }
+
+    /**
+     * Gets the labels for the description
+     *
+     * @return array
+     */
+    public function getApiDescription()
+    {
+        return $this->apiDescription ?: [];
     }
 
     /**
@@ -941,7 +1038,7 @@ class Field implements JsonWriter
             $this->range = explode(':', substr($properties['html-type'], 12));
         }
 
-        if (Helpers::isKeyExists($properties, 'range') && is_array($properties['range'])) {
+        if (Arr::isKeyExists($properties, 'range') && is_array($properties['range'])) {
             $this->range = $properties['range'];
         }
 
@@ -958,7 +1055,7 @@ class Field implements JsonWriter
      */
     public function setOptionsProperty(array $properties)
     {
-        if (Helpers::isKeyExists($properties, 'options') && is_array($properties['options'])) {
+        if (Arr::isKeyExists($properties, 'options') && is_array($properties['options'])) {
             $labels = $this->transferOptionsToLabels($properties['options']);
 
             foreach ($labels as $label) {
@@ -1031,7 +1128,7 @@ class Field implements JsonWriter
             return null;
         }
 
-        return Helpers::postFixWith($action, ';');
+        return Str::postfix($action, ';');
     }
 
     /**
@@ -1043,7 +1140,7 @@ class Field implements JsonWriter
      */
     public function setDataTypeParams(array $properties)
     {
-        if (Helpers::isKeyExists($properties, 'data-type-params')) {
+        if (Arr::isKeyExists($properties, 'data-type-params')) {
             $this->methodParams = $this->getDataTypeParams((array) $properties['data-type-params']);
         }
 		
@@ -1095,6 +1192,24 @@ class Field implements JsonWriter
     }
 
     /**
+     * It set the labels property for a given field
+     *
+     * @param array $properties
+     *
+     * @return $this
+     */
+    protected function setApiDescriptionProperty(array $properties)
+    {
+        $labels = $this->getApiDescriptionsFromProperties($properties);
+
+        foreach ($labels as $label) {
+            $this->addApiDescription($label->text, $label->isPlain, $label->lang);
+        }
+
+        return $this;
+    }
+
+    /**
      * Check is the field has multiple answers
      *
      * @return bool
@@ -1113,17 +1228,38 @@ class Field implements JsonWriter
      */
     protected function getLabelsFromProperties(array $properties)
     {
-        if (!Helpers::isKeyExists($properties, 'labels')) {
+        if (!Arr::isKeyExists($properties, 'labels')) {
             throw new Exception('The resource-file is missing the labels entry for the ' . $this->name . ' field.');
         }
 
         if (is_array($properties['labels'])) {
-            //At this point we know this the label
             return $this->getLabelsFromArray($properties['labels']);
         }
 
         return [
             new Label($properties['labels'], $this->localeGroup, true, $this->defaultLang),
+        ];
+    }
+
+    /**
+     * It will get the provided labels from with the $properties's 'label' or 'labels' property
+     *
+     * @param array $properties
+     *
+     * @return array
+     */
+    protected function getApiDescriptionsFromProperties(array $properties)
+    {
+        if (!Arr::isKeyExists($properties, 'api-description')) {
+            return [];
+        }
+
+        if (is_array($properties['api-description'])) {
+            return $this->getLabelsFromArray($properties['api-description']);
+        }
+
+        return [
+            new Label($properties['api-description'], $this->localeGroup, true, $this->defaultLang),
         ];
     }
 
@@ -1136,8 +1272,8 @@ class Field implements JsonWriter
      */
     public function setValidationProperty(array $properties)
     {
-        if (Helpers::isKeyExists($properties, 'validation')) {
-            $this->validationRules = is_array($properties['validation']) ? $properties['validation'] : Helpers::removeEmptyItems(explode('|', $properties['validation']));
+        if (Arr::isKeyExists($properties, 'validation')) {
+            $this->validationRules = is_array($properties['validation']) ? $properties['validation'] : Arr::removeEmptyItems(explode('|', $properties['validation']));
         }
 
         if (Helpers::isNewerThanOrEqualTo('5.2') && $this->isNullable() && !in_array('nullable', $this->validationRules)) {
@@ -1160,18 +1296,18 @@ class Field implements JsonWriter
                 $this->validationRules[] = 'string';
             }
 
-            if (!Helpers::inArraySearch($this->validationRules, 'min')) {
+            if (!Arr::isMatch($this->validationRules, 'min')) {
                 $this->validationRules[] = sprintf('min:%s', $this->getMinLength());
             }
 
-            if (!Helpers::inArraySearch($this->validationRules, 'max') && !is_null($this->getMaxLength())) {
+            if (!Arr::isMatch($this->validationRules, 'max') && !is_null($this->getMaxLength())) {
                 $this->validationRules[] = sprintf('max:%s', $this->getMaxLength());
             }
         }
 
         $params = [];
 
-        if (Helpers::isKeyExists($properties, 'data-type-params')) {
+        if (Arr::isKeyExists($properties, 'data-type-params')) {
             $params = $this->getDataTypeParams((array) $properties['data-type-params']);
         }
 
@@ -1182,11 +1318,11 @@ class Field implements JsonWriter
                 $this->validationRules[] = 'numeric';
             }
 
-            if (!Helpers::inArraySearch($this->validationRules, 'min') && !is_null($minValue = $this->getMinValue())) {
+            if (!Arr::isMatch($this->validationRules, 'min') && !is_null($minValue = $this->getMinValue())) {
                 $this->validationRules[] = sprintf('min:%s', $minValue);
             }
 
-            if (!Helpers::inArraySearch($this->validationRules, 'max') && !is_null($maxValue = $this->getMaxValue())) {
+            if (!Arr::isMatch($this->validationRules, 'max') && !is_null($maxValue = $this->getMaxValue())) {
                 $this->validationRules[] = sprintf('max:%s', $maxValue);
             }
         }
@@ -1203,7 +1339,7 @@ class Field implements JsonWriter
      */
     public function setUnsigned(array $properties)
     {
-        $this->isUnsigned = (Helpers::isKeyExists($properties, 'is-unsigned') && $properties['is-unsigned'])
+        $this->isUnsigned = (Arr::isKeyExists($properties, 'is-unsigned') && $properties['is-unsigned'])
         || in_array($this->getEloquentDataMethod(), $this->unsignedTypes);
 
         return $this;
@@ -1218,13 +1354,13 @@ class Field implements JsonWriter
      */
     protected function setForeignRelationFromArray(array $properties)
     {
-        if (Helpers::isKeyExists($properties, 'is-foreign-relation') && !$properties['is-foreign-relation']) {
+        if (Arr::isKeyExists($properties, 'is-foreign-relation') && !$properties['is-foreign-relation']) {
             return $this;
         }
 
-        $relation = ForeignRelationship::predict($this->name, Helpers::getModelsPath());
+        $relation = ForeignRelationship::predict($this->name, self::getModelsPath());
 
-        if (Helpers::isKeyExists($properties, 'foreign-relation')) {
+        if (Arr::isKeyExists($properties, 'foreign-relation')) {
             $relation = ForeignRelationship::get((array) $properties['foreign-relation']);
 
             if (!is_null($relation)) {
@@ -1232,7 +1368,7 @@ class Field implements JsonWriter
                 $this->setOnUpdate($properties);
             }
 
-        } else if (Helpers::isKeyExists($properties, 'foreign-constraint')) {
+        } else if (Arr::isKeyExists($properties, 'foreign-constraint')) {
             $constraint = $this->getForeignConstraintFromArray((array) $properties);
 
             if (!is_null($constraint)) {
@@ -1270,7 +1406,7 @@ class Field implements JsonWriter
      *
      * @param array $properties
      *
-     * @return null || CrestApps\CodeGenerator\Models\ForeignConstraint
+     * @return null || robertgarrigos\CodeGenerator\Models\ForeignConstraint
      */
     protected function getForeignConstraintFromArray(array $properties)
     {
@@ -1290,9 +1426,9 @@ class Field implements JsonWriter
      */
     protected function containsForeignConstraint(array $properties)
     {
-        return Helpers::isKeyExists($properties, 'foreign-constraint')
+        return Arr::isKeyExists($properties, 'foreign-constraint')
         && is_array($properties['foreign-constraint'])
-        && Helpers::isKeyExists($properties['foreign-constraint'], 'field', 'references', 'on');
+        && Arr::isKeyExists($properties['foreign-constraint'], 'field', 'references', 'on');
     }
 
     /**
@@ -1478,7 +1614,7 @@ class Field implements JsonWriter
             return $options[0];
         }
 
-        $label = new Label('Yes', $this->getLocaleKey(''), true, $this->defaultLang, $this->getFieldId(1), 1);
+        $label = new Label('Yes', $this->localeGroup, true, $this->defaultLang, $this->getFieldId(1), 1);
 
         return $label;
     }
@@ -1500,7 +1636,7 @@ class Field implements JsonWriter
             return $options[0];
         }
 
-        return new Label('No', $this->getLocaleKey(''), true, 'en', $this->getFieldId(0), 0);
+        return new Label('No', $this->localeGroup, true, 'en', $this->getFieldId(0), 0);
     }
 
     /**
@@ -1581,7 +1717,6 @@ class Field implements JsonWriter
 
         return $max;
     }
-
     /**
      * Gets the minimum value a field can equal.
      *
@@ -1672,7 +1807,7 @@ class Field implements JsonWriter
      */
     public static function isValidHtmlType(array $properties)
     {
-        return Helpers::isKeyExists($properties, 'html-type') &&
+        return Arr::isKeyExists($properties, 'html-type') &&
             (
             in_array($properties['html-type'], self::$validHtmlTypes)
             || self::isValidSelectRangeType($properties)
@@ -1688,7 +1823,7 @@ class Field implements JsonWriter
      */
     public static function isValidSelectRangeType(array $properties)
     {
-        return Helpers::isKeyExists($properties, 'html-type')
+        return Arr::isKeyExists($properties, 'html-type')
         && starts_with($properties['html-type'], 'selectRange|');
     }
 
@@ -1730,6 +1865,8 @@ class Field implements JsonWriter
         'cast-as' => 'castAs',
         'cast' => 'castAs',
         'is-date' => 'isDate',
+        'api-key' => 'apiKey',
+        'is-api-visible' => 'isApiVisible',
     ];
 
     /**
@@ -1743,7 +1880,7 @@ class Field implements JsonWriter
     public function setPredefindProperties(array $properties)
     {
         foreach ($this->predefinedKeyMapping as $key => $property) {
-            if (Helpers::isKeyExists($properties, $key)) {
+            if (Arr::isKeyExists($properties, $key)) {
                 if (is_array($property)) {
                     foreach ($property as $name) {
                         $this->{$name} = $properties[$key];
@@ -1767,8 +1904,8 @@ class Field implements JsonWriter
      */
     public static function getNameFromArray(array $properties)
     {
-        if (!Helpers::isKeyExists($properties, 'name')
-            || empty($fieldName = Helpers::removeNonEnglishChars($properties['name']))
+        if (!Arr::isKeyExists($properties, 'name')
+            || empty($fieldName = Str::removeNonEnglishChars($properties['name']))
         ) {
             throw new Exception("The field 'name' was not provided!");
         }
@@ -1797,6 +1934,7 @@ class Field implements JsonWriter
 
         $field->setPredefindProperties($properties)
             ->setLabelsProperty($properties)
+            ->setApiDescriptionProperty($properties)
             ->setDataTypeParams($properties)
             ->setOptionsProperty($properties)
             ->setUnsigned($properties)

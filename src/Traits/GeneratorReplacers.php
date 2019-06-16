@@ -1,7 +1,7 @@
 <?php
-namespace CrestApps\CodeGenerator\Traits;
+namespace robertgarrigos\CodeGenerator\Traits;
 
-use CrestApps\CodeGenerator\Support\Str;
+use robertgarrigos\CodeGenerator\Support\Str;
 
 trait GeneratorReplacers
 {
@@ -48,9 +48,9 @@ trait GeneratorReplacers
     {
         foreach ($items as $labels) {
             foreach ($labels as $label) {
-                $text = $label->isPlain ? $label->text : sprintf("{{ trans('%s') }}", $label->localeGroup);
+                $text = $label->isPlain ? $label->text : sprintf("{{ trans('%s') }}", $label->getAccessor());
                 if ($label->isInFunction) {
-                    $text = $label->isPlain ? sprintf("'%s'", $label->text) : sprintf("trans('%s')", $label->localeGroup);
+                    $text = $label->isPlain ? sprintf("'%s'", $label->text) : sprintf("trans('%s')", $label->getAccessor());
                 }
                 $stub = $this->strReplace($label->template, $text, $stub);
             }
@@ -80,8 +80,7 @@ trait GeneratorReplacers
      */
     protected function replaceControllerName(&$stub, $name)
     {
-        $stub = $this->strReplace('controller_name', $name, $stub);
-        return $this;
+        return $this->replaceTemplate('controller_name', $name, $stub);
     }
 
     /**

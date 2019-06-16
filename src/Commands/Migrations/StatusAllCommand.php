@@ -1,8 +1,8 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands\Migrations;
+namespace robertgarrigos\CodeGenerator\Commands\Migrations;
 
-use CrestApps\CodeGenerator\Commands\Bases\MigrationCommandBase;
+use robertgarrigos\CodeGenerator\Commands\Bases\MigrationCommandBase;
 use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Support\Collection;
 use Symfony\Component\Console\Input\InputOption;

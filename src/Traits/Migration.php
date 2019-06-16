@@ -1,9 +1,9 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Traits;
+namespace robertgarrigos\CodeGenerator\Traits;
 
 use App;
-use CrestApps\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Support\Str;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
@@ -101,9 +101,9 @@ trait Migration
      */
     protected function getAlterMigrationName($name, $count)
     {
-        $filename = sprintf('%s_alter_%s_table_%s.php', date('Y_m_d_His'), strtolower($name), $count);
+        $filename = sprintf('%s_alter_%s_%s_table.php', date('Y_m_d_His'), strtolower($name), $count);
 
-        return Helpers::postFixWith($filename, '.php');
+        return Str::postfix($filename, '.php');
     }
 
     /**
@@ -117,7 +117,7 @@ trait Migration
     {
         $filename = sprintf('%s_create_%s_table.php', date('Y_m_d_His'), strtolower($name));
 
-        return Helpers::postFixWith($filename, '.php');
+        return Str::postfix($filename, '.php');
     }
 
     /**
@@ -142,6 +142,6 @@ trait Migration
      */
     protected function makeAlterTableClassName($tableName, $id)
     {
-        return sprintf('Alter%sTable%s', studly_case($tableName), $id);
+        return sprintf('Alter%s%sTable', studly_case($tableName), $id);
     }
 }

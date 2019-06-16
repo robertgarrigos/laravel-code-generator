@@ -1,8 +1,9 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands\Migrations;
+namespace robertgarrigos\CodeGenerator\Commands\Migrations;
 
-use CrestApps\CodeGenerator\Commands\Bases\MigrationCommandBase;
+use robertgarrigos\CodeGenerator\Commands\Bases\MigrationCommandBase;
+use robertgarrigos\CodeGenerator\Support\Helpers;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Database\Migrations\Migrator;
 
@@ -42,19 +43,31 @@ class MigrateAllCommand extends MigrationCommandBase
 
         $this->prepareDatabase();
 
-        // Next, we will check to see if a path option has been defined. If it has
-        // we will use the path relative to the root of this installation folder
-        // so that migrations may be run for any path within the applications.
-        $this->migrator->run($this->getMigrationPaths(), [
-            'pretend' => $this->option('pretend'),
-            'step' => $this->option('step'),
-        ]);
-		
-        // Once the migrator has run we will grab the note output and send it out to
-        // the console screen, since the migrator itself functions without having
-        // any instances of the OutputInterface contract passed into the class.
-        foreach ($this->getMigratorNotes() as $note) {
-            $this->output->writeln($note);
+        if (Helpers::isNewerThanOrEqualTo('5.7')) {
+            // Next, we will check to see if a path option has been defined. If it has
+            // we will use the path relative to the root of this installation folder
+            // so that migrations may be run for any path within the applications.
+
+            $this->migrator->setOutput($this->output)
+                ->run($this->getMigrationPaths(), [
+                    'pretend' => $this->option('pretend'),
+                    'step' => $this->option('step'),
+                ]);
+        } else {
+            // Next, we will check to see if a path option has been defined. If it has
+            // we will use the path relative to the root of this installation folder
+            // so that migrations may be run for any path within the applications.
+            $this->migrator->run($this->getMigrationPaths(), [
+                'pretend' => $this->option('pretend'),
+                'step' => $this->option('step'),
+            ]);
+
+            // Once the migrator has run we will grab the note output and send it out to
+            // the console screen, since the migrator itself functions without having
+            // any instances of the OutputInterface contract passed into the class.
+            foreach ($this->migrator->getNotes() as $note) {
+                $this->output->writeln($note);
+            }
         }
 
         // Finally, if the "seed" option has been given, we will re-run the database

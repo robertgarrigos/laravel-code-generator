@@ -1,10 +1,10 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Commands;
+namespace robertgarrigos\CodeGenerator\Commands;
 
-use CrestApps\CodeGenerator\Support\Helpers;
-use CrestApps\CodeGenerator\Traits\CommonCommand;
-use CrestApps\CodeGenerator\Traits\GeneratorReplacers;
+use robertgarrigos\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Traits\CommonCommand;
+use robertgarrigos\CodeGenerator\Traits\GeneratorReplacers;
 use Exception;
 use Illuminate\Console\Command;
 use Route;

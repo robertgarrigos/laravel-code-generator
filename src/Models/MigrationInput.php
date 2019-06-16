@@ -1,8 +1,8 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Models;
+namespace robertgarrigos\CodeGenerator\Models;
 
-use CrestApps\CodeGenerator\Support\Helpers;
+use robertgarrigos\CodeGenerator\Support\Helpers;
 
 class MigrationInput
 {

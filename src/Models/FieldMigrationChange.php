@@ -1,31 +1,31 @@
 <?php
 
-namespace CrestApps\CodeGenerator\Models;
+namespace robertgarrigos\CodeGenerator\Models;
 
-use CrestApps\CodeGenerator\Models\Bases\MigrationChangeBase;
-use CrestApps\CodeGenerator\Support\Contracts\ChangeDetector;
-use CrestApps\CodeGenerator\Support\Contracts\JsonWriter;
+use robertgarrigos\CodeGenerator\Models\Bases\MigrationChangeBase;
+use robertgarrigos\CodeGenerator\Support\Contracts\ChangeDetector;
+use robertgarrigos\CodeGenerator\Support\Contracts\JsonWriter;
 
 class FieldMigrationChange extends MigrationChangeBase implements JsonWriter, ChangeDetector
 {
     /**
      * The field to be deleted or added
      *
-     * @var CrestApps\CodeGenerator\Models\Field
+     * @var robertgarrigos\CodeGenerator\Models\Field
      */
     public $field;
 
     /**
      * The field to be changed from
      *
-     * @var CrestApps\CodeGenerator\Models\Field
+     * @var robertgarrigos\CodeGenerator\Models\Field
      */
     public $fromField;
 
     /**
      * The field to be changed to
      *
-     * @var CrestApps\CodeGenerator\Models\Field
+     * @var robertgarrigos\CodeGenerator\Models\Field
      */
     public $toField;
 
@@ -95,9 +95,9 @@ class FieldMigrationChange extends MigrationChangeBase implements JsonWriter, Ch
     /**
      * Get new migration change from the given field
      *
-     * @param CrestApps\CodeGenerator\Models\Field $field
+     * @param robertgarrigos\CodeGenerator\Models\Field $field
      *
-     * @return CrestApps\CodeGenerator\Models\FieldMigrationChange
+     * @return robertgarrigos\CodeGenerator\Models\FieldMigrationChange
      */
     public static function getAdded(Field $field)
     {
@@ -111,9 +111,9 @@ class FieldMigrationChange extends MigrationChangeBase implements JsonWriter, Ch
     /**
      * Get new migration change from the given field
      *
-     * @param CrestApps\CodeGenerator\Models\Field $field
+     * @param robertgarrigos\CodeGenerator\Models\Field $field
      *
-     * @return CrestApps\CodeGenerator\Models\FieldMigrationChange
+     * @return robertgarrigos\CodeGenerator\Models\FieldMigrationChange
      */
     public static function getDeleted(Field $field)
     {
@@ -127,10 +127,10 @@ class FieldMigrationChange extends MigrationChangeBase implements JsonWriter, Ch
     /**
      * Get the migration change after comparing two given fields
      *
-     * @param CrestApps\CodeGenerator\Models\Field $fieldA
-     * @param CrestApps\CodeGenerator\Models\Field $fieldB
+     * @param robertgarrigos\CodeGenerator\Models\Field $fieldA
+     * @param robertgarrigos\CodeGenerator\Models\Field $fieldB
      *
-     * @return CrestApps\CodeGenerator\Models\FieldMigrationChange
+     * @return robertgarrigos\CodeGenerator\Models\FieldMigrationChange
      */
     public static function compare(Field $fieldA, Field $fieldB)
     {
