@@ -1,6 +1,7 @@
-[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=An%20intelligent%20code%20generator%20for%20Laravel%20framework%20which%20will%20save%20you%20lots%20of%20time!&url=https://github.com/CrestApps/laravel-code-generator&hashtags=laravel,laravel-code-generator,laravel-crud,code-generator,crud-generator,laravel-crud-generator)
+# Preface
+This is a fork of branch v2.3 of this repo https://crestapps.com/laravel-code-generator. I'm adapting it to my own use (default template with bulma, instead of bootstrap, for instance) and using it in my own laravel starter kit (https://github.com/robertgarrigos/laravel-starter).
 
-[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=An%20intelligent%20code%20generator%20for%20Laravel%20framework%20which%20will%20save%20you%20lots%20of%20time!&url=https://github.com/CrestApps/laravel-code-generator&hashtags=laravel,laravel-code-generator,laravel-crud,code-generator,crud-generator,laravel-crud-generator)
+Follows the original readme file from the forked repo.
 
 ## Introduction
 
